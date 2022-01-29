@@ -25,28 +25,26 @@ const ScannerBusiness = () => {
   }, []);
 
   const handleBarCodeScanned = ({ data }) => {
-    const handleBarCodeScanned = ({ data }) => {
-      setScanned(true);
-      SecureStore.getItemAsync("jwt").then((token) => {
-        axios
-          .post(
-            `/qr/consume/${data}`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log("hello");
-            console.log(err);
-          });
-      });
-    };
+    setScanned(true);
+    SecureStore.getItemAsync("jwt").then((token) => {
+      axios
+        .post(
+          `/qr/consume/${data}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log("hello");
+          console.log(err);
+        });
+    });
   };
 
   if (hasPermission === null) {

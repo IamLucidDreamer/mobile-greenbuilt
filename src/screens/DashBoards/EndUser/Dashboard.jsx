@@ -11,105 +11,30 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import GradientText from "../../components/GradientText";
+import { useSelector } from "react-redux";
 
 const Dashboard = ({ navigation }) => {
+  const user = useSelector((state) => state.user);
   return (
     <View style={styles.container}>
-      <Text style={styles.text1}>Hello, Name</Text>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 25,
-        }}
-      >
-        <GradientText text={"Home"} fontSize={45} />
-        <View
-          style={{ height: 40, width: 40, backgroundColor: "#D1D1D6" }}
-        ></View>
-      </View>
       <View style={styles.container1}>
-        <View>
-          <Text style={styles.text3}>Total Points</Text>
-          <GradientText text={"890 Points"} fontSize={50} />
+        <Text style={styles.text1}>Hello {user.data.name}</Text>
+        <View
+          style={{
+            paddingHorizontal: 15,
+            paddingVertical: 15,
+            borderRadius: 20,
+            backgroundColor: "#fcfffc",
+            marginVertical: 10,
+            alignItems: "center",
+          }}
+        >
+          <GradientText text={user.data.points} fontSize={60} />
+          <Text style={styles.text2}>Total Points</Text>
         </View>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <GradientText text={"Scans"} fontSize={45} />
-        <Text>See All</Text>
-      </View>
-      <View>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginVertical: 15,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              source={require("../../../assets/barcode.png")}
-              style={{ height: 50, width: 42 }}
-            />
-            <View style={{ marginHorizontal: 15 }}>
-              <Text style={styles.text1}>Puma T-Shirt</Text>
-              <Text>15 Aug 2020</Text>
-            </View>
-          </View>
-          <Text>350 pts.</Text>
-        </TouchableOpacity>
-      </View>
-      <View>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginVertical: 15,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              source={require("../../../assets/barcode.png")}
-              style={{ height: 50, width: 42 }}
-            />
-            <View style={{ marginHorizontal: 15 }}>
-              <Text style={styles.text1}>Jeans</Text>
-              <Text>30 Aug 2020</Text>
-            </View>
-          </View>
-          <Text>310 pts.</Text>
-        </TouchableOpacity>
-      </View>
-      <View>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginVertical: 15,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              source={require("../../../assets/barcode.png")}
-              style={{ height: 50, width: 42 }}
-            />
-            <View style={{ marginHorizontal: 15 }}>
-              <Text style={styles.text1}>Shirt</Text>
-              <Text>13 Jun 2020</Text>
-            </View>
-          </View>
-          <Text>280 pts.</Text>
-        </TouchableOpacity>
+      <View style={styles.container2}>
+        <GradientText text="Scans" fontSize={40} />
       </View>
 
       <LinearGradient
@@ -131,26 +56,28 @@ export default Dashboard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 15,
+    backgroundColor: "#140035",
   },
-  text1: { fontSize: 18, marginTop: 10 },
-  text2: { fontSize: 35, fontWeight: "bold", color: "#65A450" },
+  text1: { fontSize: 20, marginTop: 10, color: "#fcfffc" },
+  text2: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#140035",
+    textAlign: "center",
+  },
   container1: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderRadius: 20,
+    flex: 1,
     backgroundColor: "#140035",
     paddingHorizontal: 20,
-    paddingVertical: 30,
-    marginBottom: 20,
+    paddingBottom: 25,
   },
   container2: {
-    borderRadius: 20,
-    backgroundColor: "#1e6100",
+    flex: 2,
+    backgroundColor: "#fcfffc",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
     paddingHorizontal: 20,
     paddingVertical: 30,
-    marginBottom: 20,
   },
   text3: { fontSize: 25, color: "#fff" },
   text4: { fontSize: 42, color: "#fff", fontWeight: "bold" },

@@ -7,42 +7,42 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
-import MaskedView from "@react-native-masked-view/masked-view";
 import GreadientText from "../components/GradientText";
+import theme from "../theme";
+import Button from "../components/Button";
 
 const UserSelect = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <GreadientText text={"What Defines you"} fontSize={50} />
+        <Image
+          source={require("../../assets/Powerlogo.png")}
+          resizeMode="contain"
+          style={{ width: 100, height: 100 }}
+        />
+        <Image
+          source={require("../../assets/Powerlogo.png")}
+          resizeMode="contain"
+          style={{ width: 250, height: 250 }}
+        />
+        <Text style={styles.text1}>
+          What Defines <Text style={{ fontWeight: "bold" }}>You</Text>
+        </Text>
       </View>
       <View style={styles.footer}>
-        <LinearGradient
-          colors={["#1e6100", "#4bc834"]}
-          start={{ x: 1, y: 1 }}
-          end={{ x: 0, y: 0.33 }}
-          style={styles.button}
-        >
-          <TouchableOpacity
-            onPress={() => navigation.navigate("SignUpBusiness")}
-          >
-            <Text style={styles.buttonText}>Enterprise</Text>
-          </TouchableOpacity>
-        </LinearGradient>
-        <LinearGradient
-          colors={["#1e6100", "#4bc834"]}
-          start={{ x: 1, y: 1 }}
-          end={{ x: 0, y: 0.33 }}
-          style={styles.button}
-        >
-          <TouchableOpacity
-            onPress={() => navigation.navigate("SignUpEndUser")}
-          >
-            <Text style={styles.buttonText}>Individual</Text>
-          </TouchableOpacity>
-        </LinearGradient>
+        <Button
+          screen={"SignBusiness"}
+          btnText={"Enterprise"}
+          color={theme.colors.cream}
+          txtColor={theme.colors.dark2}
+        />
+        <Button
+          screen={"SignUser"}
+          btnText={"Individual"}
+          color={theme.colors.cream}
+          txtColor={theme.colors.dark2}
+        />
       </View>
     </View>
   );
@@ -53,27 +53,31 @@ export default UserSelect;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#140035",
+    backgroundColor: theme.colors.green2,
   },
   header: {
-    flex: 2,
-    alignItems: "flex-start",
-    justifyContent: "flex-end",
-    paddingHorizontal: 20,
-    paddingBottom: 25,
-  },
-  footer: {
-    flex: 1,
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 35,
-    borderTopRightRadius: 35,
-    paddingVertical: 30,
-    paddingHorizontal: 20,
-    shadowColor: "#29d38a",
+    flex: 3,
+    backgroundColor: theme.colors.cream,
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomEndRadius: 65,
+    borderBottomStartRadius: 65,
+    shadowColor: "#fff",
+    elevation: 10,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    elevation: 10,
+  },
+  footer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+  text1: {
+    fontSize: 50,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    color: theme.colors.dark2,
   },
   button: {
     alignSelf: "center",

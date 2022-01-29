@@ -3,7 +3,7 @@ import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 
-const GreadientText = (props) => {
+const GradientText = (props) => {
   return (
     <MaskedView
       maskElement={
@@ -34,6 +34,6 @@ const GreadientText = (props) => {
   );
 };
 
-export default GreadientText;
+export default GradientText;
 
 const styles = StyleSheet.create({});

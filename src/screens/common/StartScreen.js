@@ -1,33 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import MaskedView from "@react-native-masked-view/masked-view";
 import GradientText from "../components/GradientText";
+import { useSelector, useDispatch } from "react-redux";
+import Dashboard from "../DashBoards/EndUser/Dashboard";
+import * as SecureStore from "expo-secure-store";
+import theme from "../theme";
+import Button from "../components/Button";
 
 export default function StartScreen({ navigation }) {
+  //const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(
+  //     dispatch(
+  //       setUserDetails(
+  //         SecureStore.getItemAsync("user").then((res) => console.log(res))
+  //       )
+  //     )
+  //   );
+  // }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
-          source={require("../../assets/Splash_Green_Built.png")}
+          source={require("../../assets/Powerlogo.png")}
           resizeMode="contain"
-          style={{ width: 180, height: 180 }}
+          style={{ width: 100, height: 100 }}
         />
+        <Image
+          source={require("../../assets/Powerlogo.png")}
+          resizeMode="contain"
+          style={{ width: 250, height: 250 }}
+        />
+        <Text style={styles.text1}>
+          Let's Save the{" "}
+          <Text style={{ fontWeight: "bold" }}>Planet Together</Text>
+        </Text>
       </View>
       <View style={styles.footer}>
-        <GradientText text={"Let's Save the Planet Together"} fontSize={40} />
-
-        <Text style={styles.text2}>Login to you Account</Text>
-        <LinearGradient
-          colors={["#1e6100", "#4bc834"]}
-          start={{ x: 1, y: 1 }}
-          end={{ x: 0, y: 0.33 }}
-          style={styles.button}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("Log")}>
-            <Text style={styles.buttonText}>Get Started</Text>
-          </TouchableOpacity>
-        </LinearGradient>
+        <Button
+          screen={"Login"}
+          btnText={"Get Started"}
+          color={theme.colors.cream}
+          txtColor={theme.colors.dark2}
+        />
       </View>
     </View>
   );
@@ -36,54 +54,30 @@ export default function StartScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#140035",
+    backgroundColor: theme.colors.green2,
   },
   header: {
-    flex: 2,
+    flex: 4,
+    backgroundColor: theme.colors.cream,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    borderBottomEndRadius: 65,
+    borderBottomStartRadius: 65,
+    shadowColor: "#fff",
+    elevation: 10,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   footer: {
     flex: 1,
-    backgroundColor: "#fcfffc",
-    justifyContent: "flex-start",
-    borderTopLeftRadius: 35,
-    borderTopRightRadius: 35,
-    paddingVertical: 30,
-    paddingHorizontal: 20,
-    shadowColor: "#29d38a",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
-    elevation: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
   text1: {
-    fontSize: 35,
-    fontWeight: "bold",
-    marginBottom: 5,
-    color: "#140035",
-  },
-  text2: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  button: {
-    alignSelf: "center",
-    width: "90%",
-    paddingVertical: 16,
+    color: theme.colors.dark2,
     paddingHorizontal: 5,
-    backgroundColor: "#29d38a",
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
-    elevation: 4,
-  },
-  buttonText: {
-    fontSize: 22,
-    color: "#fcfffc",
-    fontWeight: "bold",
-    textAlign: "center",
+    fontSize: 50,
+    marginBottom: 40,
   },
 });

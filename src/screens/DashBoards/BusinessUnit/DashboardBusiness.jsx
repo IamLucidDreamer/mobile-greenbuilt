@@ -12,11 +12,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import GradientText from "../../components/GradientText";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import QRCode from "react-native-qrcode-svg";
 
-const Dashboard = ({ navigation }) => {
-  const [show, setShow] = useState(false);
-
+const DashboardBusiness = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text1}>Hello, Name</Text>
@@ -116,10 +113,6 @@ const Dashboard = ({ navigation }) => {
             <Text>280 pts.</Text>
           </TouchableOpacity>
         </View>
-
-        <View style={{ alignItems: "center" }}>
-          {show ? <QRCode value="www.facebook.com" /> : null}
-        </View>
       </ScrollView>
 
       <LinearGradient
@@ -128,7 +121,7 @@ const Dashboard = ({ navigation }) => {
         end={{ x: 0, y: 0.33 }}
         style={styles.button1}
       >
-        <TouchableOpacity onPress={() => setShow(!show)}>
+        <TouchableOpacity onPress={() => navigation.navigate("GenerateQR")}>
           <MaterialCommunityIcons
             name="qrcode-edit"
             color={"#fcfffc"}
@@ -143,7 +136,9 @@ const Dashboard = ({ navigation }) => {
         end={{ x: 0, y: 0.33 }}
         style={styles.button}
       >
-        <TouchableOpacity onPress={() => navigation.navigate("ScannerUser")}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ScannerBusiness")}
+        >
           <MaterialIcons name="qr-code-scanner" color={"#fcfffc"} size={50} />
         </TouchableOpacity>
       </LinearGradient>
@@ -151,7 +146,7 @@ const Dashboard = ({ navigation }) => {
   );
 };
 
-export default Dashboard;
+export default DashboardBusiness;
 
 const styles = StyleSheet.create({
   container: {
