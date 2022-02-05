@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 import {
+  SafeAreaView,
+  StatusBar,
+  Platform,
   View,
   StyleSheet,
   Image,
@@ -21,6 +24,7 @@ import { authenticated, isBusinessUser } from "../../helpers/auth-helper";
 import Errors from "../components/Errors";
 import theme from "../theme";
 import Button from "../components/Button";
+import { StatusBar as Status } from "expo-status-bar";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -54,14 +58,10 @@ const LoginScreen = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <Status style="inverted" />
       <View style={styles.header}>
-        <Image
-          source={require("../../assets/Powerlogo.png")}
-          resizeMode="contain"
-          style={{ width: 80, height: 80 }}
-        />
-        <Text style={styles.text1}>GREENBUILT</Text>
+        <GradientText text={"Welcome Back"} fontSize={60} />
       </View>
       <View style={styles.footer}>
         <Formik
@@ -130,13 +130,21 @@ const LoginScreen = ({ navigation }) => {
                 >
                   <Text style={styles.forgottext}>Forgot Password</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={formProps.handleSubmit}
-                  type="submit"
-                  style={styles.btn}
+
+                <LinearGradient
+                  colors={["#1e6100", "#4bc834"]}
+                  start={{ x: 1, y: 1 }}
+                  end={{ x: 0, y: 0.33 }}
+                  style={styles.button}
                 >
-                  <Text style={styles.btnTxt}>LogIn</Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={formProps.handleSubmit}
+                    type="submit"
+                    style={styles.btn}
+                  >
+                    <Text style={styles.buttonText}>LogIn</Text>
+                  </TouchableOpacity>
+                </LinearGradient>
                 <View style={styles.signup}>
                   <Text style={styles.signtxt}>Don't have an Account ? </Text>
                   <TouchableOpacity
@@ -152,7 +160,7 @@ const LoginScreen = ({ navigation }) => {
           )}
         </Formik>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -160,30 +168,28 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     flex: 1,
-    backgroundColor: theme.colors.green2,
+    backgroundColor: theme.colors.purple,
   },
   header: {
-    flex: 1,
-    backgroundColor: theme.colors.cream,
-    alignItems: "center",
+    flex: 2,
+    backgroundColor: theme.colors.purple,
+    paddingHorizontal: 20,
+    alignItems: "flex-start",
     justifyContent: "flex-end",
-    borderBottomEndRadius: 65,
-    borderBottomStartRadius: 65,
-    shadowColor: "#fff",
-    elevation: 10,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
   },
   footer: {
     flex: 3,
     paddingTop: 30,
+    backgroundColor: theme.colors.white,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
   text1: {
     fontSize: 30,
     marginBottom: 20,
-    color: theme.colors.dark2,
+    color: theme.colors.white,
   },
   inputContainer: {
     flex: 1,
@@ -194,27 +200,22 @@ const styles = StyleSheet.create({
   },
   inputField: {
     flexDirection: "row",
-    backgroundColor: theme.colors.cream,
+    backgroundColor: theme.colors.white,
     alignItems: "center",
-    height: 70,
+    height: 60,
     marginTop: 10,
     paddingHorizontal: 8,
     marginBottom: 20,
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 10,
     borderBottomColor: "#140035",
-    shadowColor: "#fff",
-    elevation: 6,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
   },
   textInput: {
     flex: 1,
     fontSize: 24,
     paddingLeft: 10,
     paddingVertical: 10,
-    color: theme.colors.dark2,
+    color: theme.colors.purple,
   },
   forgotbtn: {
     alignSelf: "flex-end",
@@ -222,24 +223,26 @@ const styles = StyleSheet.create({
   },
   forgottext: {
     fontSize: 16,
-    color: theme.colors.cream2,
+    color: theme.colors.purple,
   },
-  btn: {
+  button: {
+    alignSelf: "center",
+    width: "90%",
+    paddingVertical: 16,
+    paddingHorizontal: 5,
+    backgroundColor: "#29d38a",
     borderRadius: 20,
-    paddingVertical: 15,
-    width: "100%",
-    shadowColor: "#fff",
-    elevation: 6,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    backgroundColor: theme.colors.cream,
+    elevation: 4,
   },
-  btnTxt: {
-    textAlign: "center",
-    fontSize: 25,
+  buttonText: {
+    fontSize: 22,
+    color: "#fcfffc",
     fontWeight: "bold",
-    color: theme.colors.dark2,
+    textAlign: "center",
   },
   signup: {
     marginTop: 15,
@@ -250,7 +253,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   signtxt: {
-    color: theme.colors.cream2,
+    color: theme.colors.purple,
     fontSize: 15,
   },
 });

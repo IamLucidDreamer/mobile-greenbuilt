@@ -8,8 +8,9 @@ import {
   Image,
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
-import MaskedView from "@react-native-masked-view/masked-view";
+import theme from "../../theme";
 import GradientText from "../../components/GradientText";
 import { useSelector } from "react-redux";
 
@@ -18,35 +19,194 @@ const Dashboard = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.container1}>
-        <Text style={styles.text1}>Hello {user.data.name}</Text>
-        <View
-          style={{
-            paddingHorizontal: 15,
-            paddingVertical: 15,
-            borderRadius: 20,
-            backgroundColor: "#fcfffc",
-            marginVertical: 10,
-            alignItems: "center",
-          }}
-        >
-          <GradientText text={user.data.points} fontSize={60} />
+        <View style={styles.profileBar}>
+          <Text style={styles.text1}>
+            Hello, <Text style={{ fontWeight: "bold" }}>{user.data.name}</Text>
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("ProfileUser")}>
+            <FontAwesome
+              name="user-circle"
+              size={65}
+              color={theme.colors.dark2}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.pointsView}>
           <Text style={styles.text2}>Total Points</Text>
+          <Text style={styles.points}>{user.data.points}</Text>
         </View>
       </View>
       <View style={styles.container2}>
-        <GradientText text="Scans" fontSize={40} />
+        <Text style={styles.text3}>SCANS</Text>
+        <ScrollView>
+          <TouchableOpacity
+            style={styles.product}
+            onPress={() => {
+              navigation.navigate("ProductUser");
+            }}
+          >
+            <View style={styles.productView}>
+              <Image
+                source={require("../../../assets/Powerlogo.png")}
+                resizeMode="contain"
+                style={{ width: 100, height: 100 }}
+              />
+              <View>
+                <Text style={styles.productPoints}>200 points</Text>
+                <Text style={styles.productTitle}>Product Name</Text>
+                <Text style={styles.productDesc}>
+                  Product Description wil come here.
+                </Text>
+                <View style={styles.detailsView}>
+                  <Text style={styles.details}>See Details</Text>
+                  <FontAwesome
+                    name="long-arrow-right"
+                    size={20}
+                    color={theme.colors.dark2}
+                    style={{ paddingHorizontal: 10 }}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.product}>
+            <View style={styles.productView}>
+              <Image
+                source={require("../../../assets/Powerlogo.png")}
+                resizeMode="contain"
+                style={{ width: 100, height: 100 }}
+              />
+              <View>
+                <Text style={styles.productPoints}>200 points</Text>
+                <Text style={styles.productTitle}>Product Name</Text>
+                <Text style={styles.productDesc}>
+                  Product Description wil come here.
+                </Text>
+                <View style={styles.detailsView}>
+                  <Text style={styles.details}>See Details</Text>
+                  <FontAwesome
+                    name="long-arrow-right"
+                    size={20}
+                    color={theme.colors.dark2}
+                    style={{ paddingHorizontal: 10 }}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.product}>
+            <View style={styles.productView}>
+              <Image
+                source={require("../../../assets/Powerlogo.png")}
+                resizeMode="contain"
+                style={{ width: 100, height: 100 }}
+              />
+              <View>
+                <Text style={styles.productPoints}>200 points</Text>
+                <Text style={styles.productTitle}>Product Name</Text>
+                <Text style={styles.productDesc}>
+                  Product Description wil come here.
+                </Text>
+                <View style={styles.detailsView}>
+                  <Text style={styles.details}>See Details</Text>
+                  <FontAwesome
+                    name="long-arrow-right"
+                    size={20}
+                    color={theme.colors.dark2}
+                    style={{ paddingHorizontal: 10 }}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.product}>
+            <View style={styles.productView}>
+              <Image
+                source={require("../../../assets/Powerlogo.png")}
+                resizeMode="contain"
+                style={{ width: 100, height: 100 }}
+              />
+              <View>
+                <Text style={styles.productPoints}>200 points</Text>
+                <Text style={styles.productTitle}>Product Name</Text>
+                <Text style={styles.productDesc}>
+                  Product Description wil come here.
+                </Text>
+                <View style={styles.detailsView}>
+                  <Text style={styles.details}>See Details</Text>
+                  <FontAwesome
+                    name="long-arrow-right"
+                    size={20}
+                    color={theme.colors.dark2}
+                    style={{ paddingHorizontal: 10 }}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.product}>
+            <View style={styles.productView}>
+              <Image
+                source={require("../../../assets/Powerlogo.png")}
+                resizeMode="contain"
+                style={{ width: 100, height: 100 }}
+              />
+              <View>
+                <Text style={styles.productPoints}>200 points</Text>
+                <Text style={styles.productTitle}>Product Name</Text>
+                <Text style={styles.productDesc}>
+                  Product Description wil come here.
+                </Text>
+                <View style={styles.detailsView}>
+                  <Text style={styles.details}>See Details</Text>
+                  <FontAwesome
+                    name="long-arrow-right"
+                    size={20}
+                    color={theme.colors.dark2}
+                    style={{ paddingHorizontal: 10 }}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.product}>
+            <View style={styles.productView}>
+              <Image
+                source={require("../../../assets/Powerlogo.png")}
+                resizeMode="contain"
+                style={{ width: 100, height: 100 }}
+              />
+              <View>
+                <Text style={styles.productPoints}>200 points</Text>
+                <Text style={styles.productTitle}>Product Name</Text>
+                <Text style={styles.productDesc}>
+                  Product Description wil come here.
+                </Text>
+                <View style={styles.detailsView}>
+                  <Text style={styles.details}>See Details</Text>
+                  <FontAwesome
+                    name="long-arrow-right"
+                    size={20}
+                    color={theme.colors.dark2}
+                    style={{ paddingHorizontal: 10 }}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
 
-      <LinearGradient
-        colors={["#1e6100", "#4bc834"]}
-        start={{ x: 1, y: 1 }}
-        end={{ x: 0, y: 0.33 }}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("ScannerUser")}
         style={styles.button}
       >
-        <TouchableOpacity onPress={() => navigation.navigate("ScannerUser")}>
-          <MaterialIcons name="qr-code-scanner" color={"#fcfffc"} size={50} />
-        </TouchableOpacity>
-      </LinearGradient>
+        <MaterialIcons
+          name="qr-code-scanner"
+          color={theme.colors.cream}
+          size={50}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -56,32 +216,103 @@ export default Dashboard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#140035",
-  },
-  text1: { fontSize: 20, marginTop: 10, color: "#fcfffc" },
-  text2: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "#140035",
-    textAlign: "center",
+    backgroundColor: theme.colors.green2,
   },
   container1: {
     flex: 1,
-    backgroundColor: "#140035",
+    backgroundColor: theme.colors.cream,
+    alignItems: "flex-start",
+    justifyContent: "space-around",
+    borderBottomEndRadius: 65,
+    borderBottomStartRadius: 65,
+    shadowColor: "#fff",
+    elevation: 10,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+  },
+  profileBar: {
+    width: "100%",
     paddingHorizontal: 20,
-    paddingBottom: 25,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  text1: {
+    fontSize: 24,
+    marginTop: 10,
+    color: theme.colors.dark2,
+  },
+  pointsView: {
+    width: "100%",
+    paddingVertical: 2,
+    paddingHorizontal: 20,
+    alignItems: "flex-start",
+    justifyContent: "space-evenly",
+  },
+  text2: {
+    fontSize: 24,
+    color: theme.colors.dark2,
+    textAlign: "center",
+  },
+  points: {
+    fontSize: 40,
+    paddingBottom: 5,
+    fontWeight: "bold",
+    color: theme.colors.dark2,
+    textAlign: "center",
   },
   container2: {
-    flex: 2,
-    backgroundColor: "#fcfffc",
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
+    flex: 3,
     paddingHorizontal: 20,
-    paddingVertical: 30,
   },
-  text3: { fontSize: 25, color: "#fff" },
-  text4: { fontSize: 42, color: "#fff", fontWeight: "bold" },
-  text5: { fontSize: 18, color: "#fff", fontWeight: "bold", marginLeft: 15 },
+  product: {
+    marginBottom: 15,
+    backgroundColor: theme.colors.cream,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    borderRadius: 15,
+    shadowColor: "#fff",
+    elevation: 10,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+  },
+  productView: {
+    width: "75%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  text3: {
+    fontSize: 35,
+    color: theme.colors.cream2,
+    paddingVertical: 10,
+  },
+  productPoints: {
+    fontWeight: "bold",
+    fontSize: 20,
+    color: theme.colors.dark2,
+  },
+  productTitle: {
+    fontSize: 20,
+    color: theme.colors.dark2,
+    fontWeight: "bold",
+  },
+  productDesc: {
+    fontSize: 15,
+    color: theme.colors.dark2,
+  },
+  detailsView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  details: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: theme.colors.dark2,
+  },
   button: {
     position: "absolute",
     width: 80,
@@ -92,7 +323,7 @@ const styles = StyleSheet.create({
     bottom: 40,
     paddingVertical: 16,
     paddingHorizontal: 5,
-    backgroundColor: "#446C24",
+    backgroundColor: theme.colors.dark2,
     borderRadius: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },

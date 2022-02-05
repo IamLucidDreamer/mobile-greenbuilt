@@ -13,22 +13,13 @@ import { useState, useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
 import Navigation from "./src/screens/Navigation";
 import theme from "./src/screens/theme";
+import Errors from "./src/screens/components/Errors";
 
 export default function App() {
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <Status style="dark" />
-        <Navigation />
-      </SafeAreaView>
+      <Errors message="Simple Error Message" />
+      <Navigation />
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    flex: 1,
-    backgroundColor: theme.colors.cream,
-  },
-});

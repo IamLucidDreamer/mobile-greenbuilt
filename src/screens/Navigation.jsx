@@ -18,6 +18,10 @@ import Products from "./Products";
 import ScannerBusiness from "./DashBoards/BusinessUnit/ScannerBusiness";
 import { useSelector } from "react-redux";
 import isEmpty from "../utils/isEmpty";
+import ProfileUser from "./DashBoards/EndUser/ProfileUser";
+import ProductUser from "./DashBoards/EndUser/ProductUser";
+import ProductBusiness from "./DashBoards/BusinessUnit/ProductBusiness";
+import ProfileBusiness from "./DashBoards/BusinessUnit/ProfileBusiness";
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
@@ -44,6 +48,8 @@ export default function Navigation() {
           //User Stack
           <>
             <Stack.Screen name="Dashboard" component={Dashboard} />
+            <Stack.Screen name="ProfileUser" component={ProfileUser} />
+            <Stack.Screen name="ProductUser" component={ProductUser} />
             <Stack.Screen name="ScannerUser" component={ScannerUser} />
           </>
         ) : (
@@ -53,6 +59,8 @@ export default function Navigation() {
               name="DashboardBusiness"
               component={DashboardBusiness}
             />
+            <Stack.Screen name="ProductBusiness" component={ProductBusiness} />
+            <Stack.Screen name="ProfileBusiness" component={ProfileBusiness} />
             <Stack.Screen name="GenerateQR" component={GenerateQR} />
             <Stack.Screen name="ScannerBusiness" component={ScannerBusiness} />
           </>

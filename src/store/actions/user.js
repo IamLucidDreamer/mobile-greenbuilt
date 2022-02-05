@@ -9,6 +9,7 @@ import {
   setToken,
   setUser,
 } from "../actions/authActions";
+import { errorMessage } from "./appActions";
 
 const setUserDetails = (data) => ({
   type: LOGIN,
@@ -34,11 +35,18 @@ export const login =
         password,
       })
       .then((res) => {
+        const user = res.data;
+        console.log({ user });
         dispatch(setUserDetails(res.data));
+        dispatch(errorMessage({ show: true, message: res.data.message }));
         SecureStore.setItemAsync("jwt", res.data.token);
         SecureStore.setItemAsync("user", JSON.stringify(res.data.data));
       })
-      .catch((err) => console.log({ err }));
+      .catch((err) => {
+        dispatch(
+          errorMessage({ show: true, message: err.response.data.error })
+        );
+      });
   };
 
 export const signUpEndUser =
@@ -74,8 +82,20 @@ export const signUpNewBusiness =
         password,
       })
       .then((res) => {
-        console.log("Test");
         dispatch(login({ email, password }));
       })
       .catch((err) => console.log({ err }));
   };
+
+export const logout = () => {
+  return (dispatch) => {
+    SecureStore.deleteItemAsync("jwt").then(() => {
+      SecureStore.setItemAsync("user", "").then(() => {
+        dispatch(setUserDetails(false));
+        dispatch(errorMessage({ show: true, message: "User Logged Out" }));
+      });
+    });
+  };
+};
+
+export { setUserDetails };

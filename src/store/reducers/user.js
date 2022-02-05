@@ -1,4 +1,9 @@
-import { LOGIN, SIGNUP_USER, SIGNUP_BUSINESS } from "../constants/index";
+import {
+  LOGIN,
+  SIGNUP_USER,
+  SIGNUP_BUSINESS,
+  LOGOUT,
+} from "../constants/index";
 
 const userReducer = (state = {}, action) => {
   switch (action.type) {
@@ -9,6 +14,9 @@ const userReducer = (state = {}, action) => {
       return action.payload;
     }
     case SIGNUP_BUSINESS: {
+      return action.payload;
+    }
+    case LOGOUT: {
       return action.payload;
     }
     default:

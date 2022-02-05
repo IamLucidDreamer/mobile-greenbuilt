@@ -1,5 +1,8 @@
 import React from "react";
 import {
+  SafeAreaView,
+  Platform,
+  StatusBar,
   View,
   StyleSheet,
   Image,
@@ -33,11 +36,9 @@ const SignUpEndUser = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.text1}>
-          Create An <Text style={{ fontWeight: "bold" }}>Account</Text>
-        </Text>
+        <GradientText text={"Create An Account"} fontSize={60} />
       </View>
       <View style={styles.footer}>
         <Formik
@@ -122,19 +123,26 @@ const SignUpEndUser = ({ navigation }) => {
                     </Text>
                   ) : null}
                 </View>
-                <TouchableOpacity
-                  onPress={formProps.handleSubmit}
-                  type="submit"
-                  style={styles.btn}
+                <LinearGradient
+                  colors={["#1e6100", "#4bc834"]}
+                  start={{ x: 1, y: 1 }}
+                  end={{ x: 0, y: 0.33 }}
+                  style={styles.button}
                 >
-                  <Text style={styles.btnTxt}>LogIn</Text>
-                </TouchableOpacity>
-                <View style={styles.signup}>
-                  <Text style={styles.signtxt}>Already have an Account ? </Text>
+                  <TouchableOpacity
+                    onPress={formProps.handleSubmit}
+                    type="submit"
+                    style={styles.btn}
+                  >
+                    <Text style={styles.buttonText}>Sign Up</Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+                <View style={styles.lognin}>
+                  <Text style={styles.logtxt}>Already have an Account ? </Text>
                   <TouchableOpacity
                     onPress={() => navigation.navigate("Login")}
                   >
-                    <Text style={[styles.signtxt, { fontWeight: "bold" }]}>
+                    <Text style={[styles.logtxt, { fontWeight: "bold" }]}>
                       Log In
                     </Text>
                   </TouchableOpacity>
@@ -144,7 +152,7 @@ const SignUpEndUser = ({ navigation }) => {
           )}
         </Formik>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -152,31 +160,23 @@ export default SignUpEndUser;
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     flex: 1,
-    backgroundColor: theme.colors.green2,
+    backgroundColor: theme.colors.purple,
   },
   header: {
     flex: 1,
-    backgroundColor: theme.colors.cream,
-    alignItems: "center",
+    backgroundColor: theme.colors.purple,
+    paddingHorizontal: 20,
+    alignItems: "flex-start",
     justifyContent: "flex-end",
-    borderBottomEndRadius: 65,
-    borderBottomStartRadius: 65,
-    shadowColor: "#fff",
-    elevation: 10,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
   },
   footer: {
-    flex: 3,
+    flex: 2,
     paddingTop: 30,
-  },
-  text1: {
-    fontSize: 45,
-    marginBottom: 20,
-    paddingHorizontal: 20,
-    color: theme.colors.dark2,
+    backgroundColor: theme.colors.white,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
   inputContainer: {
     flex: 1,
@@ -185,29 +185,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: "center",
   },
+  text1: {
+    fontSize: 45,
+    marginBottom: 20,
+    paddingHorizontal: 20,
+    color: theme.colors.dark2,
+  },
   inputField: {
     flexDirection: "row",
-    backgroundColor: theme.colors.cream,
+    backgroundColor: theme.colors.white,
     alignItems: "center",
-    height: 70,
+    height: 60,
     marginTop: 10,
     paddingHorizontal: 8,
     marginBottom: 20,
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 10,
     borderBottomColor: "#140035",
-    shadowColor: "#fff",
-    elevation: 6,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
   },
   textInput: {
     flex: 1,
     fontSize: 24,
     paddingLeft: 10,
     paddingVertical: 10,
-    color: theme.colors.dark2,
+    color: "#05375a",
   },
   forgotbtn: {
     alignSelf: "flex-end",
@@ -217,25 +218,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000",
   },
-  btn: {
-    marginTop: 25,
+  button: {
+    alignSelf: "center",
+    width: "90%",
+    paddingVertical: 16,
+    paddingHorizontal: 5,
+    backgroundColor: "#29d38a",
     borderRadius: 20,
-    paddingVertical: 15,
-    width: "100%",
-    shadowColor: "#fff",
-    elevation: 6,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    backgroundColor: theme.colors.cream,
+    elevation: 4,
   },
-  btnTxt: {
-    textAlign: "center",
-    fontSize: 25,
+  buttonText: {
+    fontSize: 22,
+    color: "#fcfffc",
     fontWeight: "bold",
-    color: theme.colors.dark2,
+    textAlign: "center",
   },
-  signup: {
+  lognin: {
     marginTop: 15,
     marginBottom: 10,
     alignSelf: "center",
@@ -243,8 +245,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  signtxt: {
-    color: theme.colors.cream2,
+  logtxt: {
+    color: theme.colors.purple,
     fontSize: 15,
   },
 });

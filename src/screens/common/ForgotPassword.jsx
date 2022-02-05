@@ -1,12 +1,14 @@
 import React from "react";
 import {
+  SafeAreaView,
   View,
   StyleSheet,
   Image,
   Text,
   TouchableOpacity,
+  Platform,
+  StatusBar,
   TextInput,
-  ImageBackground,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import { LinearGradient } from "expo-linear-gradient";
@@ -14,6 +16,7 @@ import GradientText from "../components/GradientText";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import theme from "../theme";
+import { StatusBar as Status } from "expo-status-bar";
 
 const ForgotPassword = ({ navigation }) => {
   const ForgotSchema = Yup.object().shape({
@@ -21,21 +24,9 @@ const ForgotPassword = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Image
-          source={require("../../assets/Powerlogo.png")}
-          resizeMode="contain"
-          style={{ width: 100, height: 100 }}
-        />
-        <Image
-          source={require("../../assets/Powerlogo.png")}
-          resizeMode="contain"
-          style={{ width: 200, height: 200 }}
-        />
-        <Text style={styles.text1}>
-          We'll find it for <Text style={{ fontWeight: "bold" }}>You</Text>
-        </Text>
+        <GradientText text={"We'll find it for You"} fontSize={60} />
       </View>
 
       <View style={styles.footer}>
@@ -72,18 +63,25 @@ const ForgotPassword = ({ navigation }) => {
                   </Text>
                 ) : null}
               </View>
-              <TouchableOpacity
-                onPress={formProps.handleSubmit}
-                type="submit"
-                style={styles.btn}
+              <LinearGradient
+                colors={["#1e6100", "#4bc834"]}
+                start={{ x: 1, y: 1 }}
+                end={{ x: 0, y: 0.33 }}
+                style={styles.button}
               >
-                <Text style={styles.btnTxt}>Send OTP</Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={formProps.handleSubmit}
+                  type="submit"
+                  style={styles.btn}
+                >
+                  <Text style={styles.buttonText}>Send OTP</Text>
+                </TouchableOpacity>
+              </LinearGradient>
             </View>
           )}
         </Formik>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -91,26 +89,25 @@ export default ForgotPassword;
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     flex: 1,
-    backgroundColor: theme.colors.green2,
+    backgroundColor: theme.colors.purple,
   },
   header: {
-    flex: 7,
-    backgroundColor: theme.colors.cream,
-    alignItems: "center",
-    justifyContent: "space-between",
+    flex: 2,
+    paddingHorizontal: 20,
+    alignItems: "flex-start",
+    justifyContent: "flex-end",
     borderBottomEndRadius: 65,
     borderBottomStartRadius: 65,
-    shadowColor: "#fff",
-    elevation: 10,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
   },
   footer: {
-    flex: 3,
+    flex: 1,
+    backgroundColor: theme.colors.white,
     alignItems: "center",
     justifyContent: "space-evenly",
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
   },
   text1: {
     fontSize: 50,
@@ -127,13 +124,13 @@ const styles = StyleSheet.create({
   },
   inputField: {
     flexDirection: "row",
-    backgroundColor: theme.colors.cream,
+    backgroundColor: theme.colors.white,
     alignItems: "center",
-    height: 70,
+    height: 60,
     marginTop: 10,
     paddingHorizontal: 8,
     marginBottom: 20,
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 10,
     borderBottomColor: "#140035",
   },
@@ -144,21 +141,23 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     color: "#05375a",
   },
-  btn: {
+  button: {
+    alignSelf: "center",
+    width: 350,
+    paddingVertical: 16,
+    paddingHorizontal: 5,
+    backgroundColor: "#29d38a",
     borderRadius: 20,
-    paddingVertical: 15,
-    width: 300,
-    shadowColor: "#fff",
-    elevation: 6,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    backgroundColor: theme.colors.cream,
+    elevation: 4,
   },
-  btnTxt: {
-    color: theme.colors.dark2,
-    textAlign: "center",
-    fontSize: 25,
+  buttonText: {
+    fontSize: 22,
+    color: "#fcfffc",
     fontWeight: "bold",
+    textAlign: "center",
   },
 });
