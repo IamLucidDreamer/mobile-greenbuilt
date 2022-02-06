@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     maxHeight: 400,
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight + 5 : "5",
     alignSelf: "center",
-    backgroundColor: theme.colors.cream,
+    backgroundColor: theme.colors.white,
     borderWidth: 2,
-    borderColor: theme.colors.dark2,
+    borderColor: theme.colors.purple,
     position: "absolute",
     paddingVertical: 25,
     paddingHorizontal: 10,
@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
   },
   text1: {
     fontSize: 18,
-    color: theme.colors.dark2,
+    color: theme.colors.purple,
   },
 });

@@ -19,6 +19,7 @@ import * as Yup from "yup";
 import { Picker } from "@react-native-picker/picker";
 import { logout } from "../../../store/actions/user";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { LinearGradient } from "expo-linear-gradient";
 
 const ProfileUser = () => {
   const dispatch = useDispatch();
@@ -144,16 +145,13 @@ const ProfileUser = () => {
                       <Text>Enter Date of Birth {}</Text>
                       {showDate ? (
                         <DateTimePicker
-                          testID="dateTimePicker"
                           mode="date"
                           value={new Date()}
                           display="default"
                           onChange={() => {
                             formProps.handleChange("dateOfBirth");
-                            (event, selectedDate) => {
-                              setShow(false);
-                              setDate(selectedDate);
-                            };
+                            setShowDate(false);
+                            console.log(formProps.values.dateOfBirth);
                           }}
                         />
                       ) : null}
@@ -225,31 +223,37 @@ const ProfileUser = () => {
                       </Text>
                     ) : null}
                   </View>
-                  <TouchableOpacity
-                    onPress={formProps.handleSubmit}
-                    type="submit"
-                    style={styles.btn}
+                  <LinearGradient
+                    colors={["#1e6100", "#4bc834"]}
+                    start={{ x: 1, y: 1 }}
+                    end={{ x: 0, y: 0.33 }}
+                    style={styles.button}
                   >
-                    <Text style={styles.btnTxt}>Update</Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={formProps.handleSubmit}
+                      type="submit"
+                    >
+                      <Text style={styles.buttonText}>Update</Text>
+                    </TouchableOpacity>
+                  </LinearGradient>
                 </View>
               </View>
             )}
           </Formik>
           <View>
-            <View>
-              <Text style={[styles.text1, { color: theme.colors.dark2 }]}>
-                Theme
-              </Text>
-              <Switch />
-            </View>
-            <TouchableOpacity
-              onPress={() => dispatch(logout())}
-              type="submit"
-              style={styles.btn}
+            <LinearGradient
+              colors={["#1e6100", "#4bc834"]}
+              start={{ x: 1, y: 1 }}
+              end={{ x: 0, y: 0.33 }}
+              style={styles.button}
             >
-              <Text style={styles.btnTxt}>Log Out</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => dispatch(logout())}
+                style={styles.btn}
+              >
+                <Text style={styles.buttonText}>Log Out</Text>
+              </TouchableOpacity>
+            </LinearGradient>
           </View>
         </ScrollView>
       </View>
@@ -313,23 +317,25 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     color: theme.colors.dark2,
   },
-  btn: {
+  button: {
+    alignSelf: "center",
+    marginVertical: 10,
+    width: "90%",
+    paddingVertical: 16,
+    paddingHorizontal: 5,
+    backgroundColor: "#29d38a",
     borderRadius: 20,
-    paddingVertical: 15,
-    width: "100%",
-    shadowColor: "#fff",
-    elevation: 6,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    backgroundColor: theme.colors.dark2,
-    marginBottom: 20,
+    elevation: 4,
   },
-  btnTxt: {
-    textAlign: "center",
-    fontSize: 25,
+  buttonText: {
+    fontSize: 22,
+    color: "#fcfffc",
     fontWeight: "bold",
-    color: theme.colors.cream,
+    textAlign: "center",
   },
   container2: {
     flex: 7,

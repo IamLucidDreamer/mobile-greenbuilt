@@ -12,8 +12,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import GradientText from "../../components/GradientText";
 import * as SecureStore from "expo-secure-store";
 import axios from "../../../helpers/http-helper";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../../../store/actions/user";
 
 const ScannerBusiness = () => {
+  const dispatch = useDispatch();
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -25,28 +28,28 @@ const ScannerBusiness = () => {
   }, []);
 
   const handleBarCodeScanned = ({ data }) => {
-    const handleBarCodeScanned = ({ data }) => {
-      setScanned(true);
-      SecureStore.getItemAsync("jwt").then((token) => {
-        axios
-          .post(
-            `/qr/consume/${data}`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log("hello");
-            console.log(err);
-          });
-      });
-    };
+    setScanned(true);
+    SecureStore.getItemAsync("jwt").then((token) => {
+      console.log(data);
+      axios
+        .post(
+          `/qr/consume/${data}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+          dispatch(setUserDetails(res.data));
+        })
+        .catch((err) => {
+          console.log("hello");
+          console.log(err);
+        });
+    });
   };
 
   if (hasPermission === null) {
