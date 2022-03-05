@@ -53,10 +53,23 @@ const SignUpEndUser = ({ navigation }) => {
           {(formProps) => (
             <ScrollView>
               <View style={styles.inputContainer}>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Name
+                </Text>
                 <View style={styles.inputField}>
-                  <Feather name="user" color={theme.colors.dark2} size={28} />
                   <TextInput
-                    placeholder="Mr. Green"
+                    placeholder=""
                     placeholderTextColor={theme.colors.dark2}
                     style={[
                       styles.textInput,
@@ -76,10 +89,23 @@ const SignUpEndUser = ({ navigation }) => {
                     </Text>
                   ) : null}
                 </View>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Email
+                </Text>
                 <View style={styles.inputField}>
-                  <Feather name="mail" color={theme.colors.dark2} size={28} />
                   <TextInput
-                    placeholder="hello@greenbuilt.com"
+                    placeholder=""
                     placeholderTextColor={theme.colors.dark2}
                     style={[
                       styles.textInput,
@@ -99,10 +125,23 @@ const SignUpEndUser = ({ navigation }) => {
                     </Text>
                   ) : null}
                 </View>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Password
+                </Text>
                 <View style={styles.inputField}>
-                  <Feather name="key" color={theme.colors.dark2} size={28} />
                   <TextInput
-                    placeholder="green@123"
+                    placeholder=""
                     placeholderTextColor={theme.colors.dark2}
                     style={[
                       styles.textInput,
@@ -175,8 +214,8 @@ const styles = StyleSheet.create({
     flex: 2,
     paddingTop: 30,
     backgroundColor: theme.colors.white,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderRadius: 25,
+    margin: 10,
   },
   inputContainer: {
     flex: 1,

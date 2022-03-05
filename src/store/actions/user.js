@@ -71,15 +71,18 @@ export const signUpEndUser =
   };
 
 export const signUpNewBusiness =
-  ({ name, phone, email, password }) =>
+  ({ name, phone, email, password, ebServiceNo, industryType, gstin }) =>
   (dispatch) => {
-    console.log(name, phone, email, password);
+    console.log(name, phone, email, password, ebServiceNo, industryType, gstin);
     axios
       .post("/signup?userType=2", {
         name,
         phone,
         email,
         password,
+        ebServiceNo,
+        industryType,
+        gstin,
       })
       .then((res) => {
         dispatch(login({ email, password }));

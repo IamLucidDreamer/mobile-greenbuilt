@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
+  SafeAreaView,
+  Platform,
+  StatusBar,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,53 +15,111 @@ import theme from "../../theme";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useSelector } from "react-redux";
+import { StatusBar as Status } from "expo-status-bar";
+import * as SecureStore from "expo-secure-store";
+import axios from "../../../helpers/http-helper";
+import GradientText from "../../components/GradientText";
+import { LinearGradient } from "expo-linear-gradient";
 
 const DashboardBusiness = ({ navigation }) => {
   const user = useSelector((state) => state.user);
+  const [scans, setScans] = useState([]);
+  const [generate, setGenerate] = useState([]);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    SecureStore.getItemAsync("jwt").then((token) => {
+      axios
+        .get(`/qr/history/consume/${user.data.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setScans(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }, []);
+
+  if (show) {
+    SecureStore.getItemAsync("jwt").then((token) => {
+      axios
+        .get(`/qr/history/generate/${user.data.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setGenerate(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <Status style="dark" />
+      <View style={styles.profileBar}>
+        <Text style={styles.text1}>
+          Hello, <Text style={{ fontWeight: "bold" }}>{user.data.name}</Text>
+        </Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ProfileBusiness")}
+        >
+          <FontAwesome
+            name="user-circle"
+            size={65}
+            color={theme.colors.purple}
+          />
+        </TouchableOpacity>
+      </View>
       <View style={styles.container1}>
-        <View style={styles.profileBar}>
-          <Text style={styles.text1}>
-            Hello, <Text style={{ fontWeight: "bold" }}>{user.data.name}</Text>
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("ProfileBusiness");
-            }}
-          >
-            <FontAwesome
-              name="user-circle"
-              size={65}
-              color={theme.colors.dark2}
-            />
-          </TouchableOpacity>
-        </View>
         <View style={styles.pointsView}>
           <Text style={styles.text2}>Total Points</Text>
-          <Text style={styles.points}>{user.data.points}</Text>
+          <GradientText text={"11,120"} fontSize={60} />
         </View>
       </View>
       <View style={styles.container2}>
-        <Text style={styles.text3}>HISTORY</Text>
+        <GradientText text={"HISTORY"} fontSize={45} />
+        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+          <TouchableOpacity onPress={() => setShow(false)}>
+            <GradientText text={"SCANS"} fontSize={25} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setShow(true)}>
+            <GradientText text={"GENERATED"} fontSize={25} />
+          </TouchableOpacity>
+        </View>
         <ScrollView>
           <TouchableOpacity
-            style={styles.product}
+            style={[styles.product]}
             onPress={() => {
-              navigation.navigate("ProductBusiness");
+              navigation.navigate("ProductUser");
             }}
           >
             <View style={styles.productView}>
               <Image
-                source={require("../../../assets/Powerlogo.png")}
+                source={{
+                  uri: "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTCGFDWZ1AnbBoUxBJEgz3SUtUWbAyJcR032wf6yZwSfh9il5LrvWnDt2NWcAGLJ8p-afT0CISkOs2ZJjQw_m70qoNeOFpJaLtvUniPlqMgx5x7zaaq--93GQ&usqp=CAE",
+                }}
                 resizeMode="contain"
-                style={{ width: 100, height: 100 }}
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginRight: 15,
+                  borderRadius: 20,
+                  backgroundColor: theme.colors.white,
+                }}
               />
               <View>
-                <Text style={styles.productPoints}>200 points</Text>
-                <Text style={styles.productTitle}>Product Name</Text>
+                <Text style={styles.productPoints}>500</Text>
+                <Text style={styles.productTitle}>Puma Jeans</Text>
                 <Text style={styles.productDesc}>
-                  Product Description wil come here.
+                  This is a high Quality Product
                 </Text>
                 <View style={styles.detailsView}>
                   <Text style={styles.details}>See Details</Text>
@@ -72,18 +133,31 @@ const DashboardBusiness = ({ navigation }) => {
               </View>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.product}>
+          <TouchableOpacity
+            style={[styles.product]}
+            onPress={() => {
+              navigation.navigate("ProductUser");
+            }}
+          >
             <View style={styles.productView}>
               <Image
-                source={require("../../../assets/Powerlogo.png")}
+                source={{
+                  uri: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSzDZssYoXP-nwE3y9tq06dxMnuuKtOhcFUO3l3e-psSNGsnreohuA3wvX3-hjlx4rBdiVyvbb-tp0O&usqp=CAc",
+                }}
                 resizeMode="contain"
-                style={{ width: 100, height: 100 }}
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginRight: 15,
+                  borderRadius: 20,
+                  backgroundColor: theme.colors.white,
+                }}
               />
               <View>
-                <Text style={styles.productPoints}>200 points</Text>
-                <Text style={styles.productTitle}>Product Name</Text>
+                <Text style={styles.productPoints}>200</Text>
+                <Text style={styles.productTitle}>Nike Shoes</Text>
                 <Text style={styles.productDesc}>
-                  Product Description wil come here.
+                  Product made by green Energy.
                 </Text>
                 <View style={styles.detailsView}>
                   <Text style={styles.details}>See Details</Text>
@@ -97,130 +171,128 @@ const DashboardBusiness = ({ navigation }) => {
               </View>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.product}>
-            <View style={styles.productView}>
-              <Image
-                source={require("../../../assets/Powerlogo.png")}
-                resizeMode="contain"
-                style={{ width: 100, height: 100 }}
-              />
-              <View>
-                <Text style={styles.productPoints}>200 points</Text>
-                <Text style={styles.productTitle}>Product Name</Text>
-                <Text style={styles.productDesc}>
-                  Product Description wil come here.
-                </Text>
-                <View style={styles.detailsView}>
-                  <Text style={styles.details}>See Details</Text>
-                  <FontAwesome
-                    name="long-arrow-right"
-                    size={20}
-                    color={theme.colors.dark2}
-                    style={{ paddingHorizontal: 10 }}
-                  />
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.product}>
-            <View style={styles.productView}>
-              <Image
-                source={require("../../../assets/Powerlogo.png")}
-                resizeMode="contain"
-                style={{ width: 100, height: 100 }}
-              />
-              <View>
-                <Text style={styles.productPoints}>200 points</Text>
-                <Text style={styles.productTitle}>Product Name</Text>
-                <Text style={styles.productDesc}>
-                  Product Description wil come here.
-                </Text>
-                <View style={styles.detailsView}>
-                  <Text style={styles.details}>See Details</Text>
-                  <FontAwesome
-                    name="long-arrow-right"
-                    size={20}
-                    color={theme.colors.dark2}
-                    style={{ paddingHorizontal: 10 }}
-                  />
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.product}>
-            <View style={styles.productView}>
-              <Image
-                source={require("../../../assets/Powerlogo.png")}
-                resizeMode="contain"
-                style={{ width: 100, height: 100 }}
-              />
-              <View>
-                <Text style={styles.productPoints}>200 points</Text>
-                <Text style={styles.productTitle}>Product Name</Text>
-                <Text style={styles.productDesc}>
-                  Product Description wil come here.
-                </Text>
-                <View style={styles.detailsView}>
-                  <Text style={styles.details}>See Details</Text>
-                  <FontAwesome
-                    name="long-arrow-right"
-                    size={20}
-                    color={theme.colors.dark2}
-                    style={{ paddingHorizontal: 10 }}
-                  />
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.product}>
-            <View style={styles.productView}>
-              <Image
-                source={require("../../../assets/Powerlogo.png")}
-                resizeMode="contain"
-                style={{ width: 100, height: 100 }}
-              />
-              <View>
-                <Text style={styles.productPoints}>200 points</Text>
-                <Text style={styles.productTitle}>Product Name</Text>
-                <Text style={styles.productDesc}>
-                  Product Description wil come here.
-                </Text>
-                <View style={styles.detailsView}>
-                  <Text style={styles.details}>See Details</Text>
-                  <FontAwesome
-                    name="long-arrow-right"
-                    size={20}
-                    color={theme.colors.dark2}
-                    style={{ paddingHorizontal: 10 }}
-                  />
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
+          {!show
+            ? scans.map((data, index) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    style={[styles.product]}
+                    onPress={() => {
+                      navigation.navigate("ProductUser");
+                    }}
+                  >
+                    <View style={styles.productView}>
+                      <Image
+                        source={{ uri: data.product.photo }}
+                        resizeMode="contain"
+                        style={{
+                          width: 100,
+                          height: 100,
+                          marginRight: 15,
+                          borderRadius: 20,
+                        }}
+                      />
+                      <View>
+                        <Text style={styles.productPoints}>
+                          {data.product.points}
+                        </Text>
+                        <Text style={styles.productTitle}>
+                          {data.product.title}
+                        </Text>
+                        <Text style={styles.productDesc}>
+                          {data.product.description}
+                        </Text>
+                        <View style={styles.detailsView}>
+                          <Text style={styles.details}>See Details</Text>
+                          <FontAwesome
+                            name="long-arrow-right"
+                            size={20}
+                            color={theme.colors.dark2}
+                            style={{ paddingHorizontal: 10 }}
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })
+            : generate.map((data, index) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    style={[styles.product]}
+                    onPress={() => {
+                      navigation.navigate("ProductUser");
+                    }}
+                  >
+                    <View style={styles.productView}>
+                      <Image
+                        source={{ uri: data.product.photo }}
+                        resizeMode="contain"
+                        style={{
+                          width: 100,
+                          height: 100,
+                          marginRight: 15,
+                          borderRadius: 20,
+                        }}
+                      />
+                      <View>
+                        <Text style={styles.productPoints}>
+                          {data.product.points}
+                        </Text>
+                        <Text style={styles.productTitle}>
+                          {data.product.title}
+                        </Text>
+                        <Text style={styles.productDesc}>
+                          {data.product.description}
+                        </Text>
+                        <View style={styles.detailsView}>
+                          <Text style={styles.details}>See Details</Text>
+                          <FontAwesome
+                            name="long-arrow-right"
+                            size={20}
+                            color={theme.colors.dark2}
+                            style={{ paddingHorizontal: 10 }}
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
         </ScrollView>
       </View>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate("GenerateQR")}
+      <LinearGradient
+        colors={["#1e6100", "#4bc834"]}
+        start={{ x: 1, y: 1 }}
+        end={{ x: 0, y: 0.33 }}
         style={styles.button1}
       >
-        <MaterialCommunityIcons
-          name="qrcode-edit"
-          color={theme.colors.cream}
-          size={50}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("ScannerBusiness")}
+        <TouchableOpacity onPress={() => navigation.navigate("GenerateQR")}>
+          <MaterialCommunityIcons
+            name="qrcode-edit"
+            color={theme.colors.white}
+            size={50}
+          />
+        </TouchableOpacity>
+      </LinearGradient>
+      <LinearGradient
+        colors={["#1e6100", "#4bc834"]}
+        start={{ x: 1, y: 1 }}
+        end={{ x: 0, y: 0.33 }}
         style={styles.button2}
       >
-        <MaterialIcons
-          name="qr-code-scanner"
-          color={theme.colors.cream}
-          size={50}
-        />
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ScannerBusiness")}
+        >
+          <MaterialIcons
+            name="qr-code-scanner"
+            color={theme.colors.white}
+            size={50}
+          />
+        </TouchableOpacity>
+      </LinearGradient>
+    </SafeAreaView>
   );
 };
 
@@ -228,25 +300,21 @@ export default DashboardBusiness;
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     flex: 1,
-    backgroundColor: theme.colors.green2,
+    backgroundColor: theme.colors.white,
   },
   container1: {
-    flex: 1,
-    backgroundColor: theme.colors.cream,
+    marginHorizontal: 20,
+    backgroundColor: theme.colors.purple,
     alignItems: "flex-start",
     justifyContent: "space-around",
-    borderBottomEndRadius: 65,
-    borderBottomStartRadius: 65,
-    shadowColor: "#fff",
-    elevation: 10,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
+    borderRadius: 20,
   },
   profileBar: {
     width: "100%",
     paddingHorizontal: 20,
+    paddingVertical: 15,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -254,18 +322,18 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 24,
     marginTop: 10,
-    color: theme.colors.dark2,
+    color: theme.colors.purple,
   },
   pointsView: {
     width: "100%",
-    paddingVertical: 2,
+    paddingVertical: 15,
     paddingHorizontal: 20,
     alignItems: "flex-start",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
   },
   text2: {
     fontSize: 24,
-    color: theme.colors.dark2,
+    color: theme.colors.white,
     textAlign: "center",
   },
   points: {
@@ -281,7 +349,7 @@ const styles = StyleSheet.create({
   },
   product: {
     marginBottom: 15,
-    backgroundColor: theme.colors.cream,
+    backgroundColor: theme.colors.purple,
     paddingVertical: 15,
     paddingHorizontal: 15,
     borderRadius: 15,
@@ -305,16 +373,16 @@ const styles = StyleSheet.create({
   productPoints: {
     fontWeight: "bold",
     fontSize: 20,
-    color: theme.colors.dark2,
+    color: theme.colors.white,
   },
   productTitle: {
     fontSize: 20,
-    color: theme.colors.dark2,
+    color: theme.colors.white,
     fontWeight: "bold",
   },
   productDesc: {
     fontSize: 15,
-    color: theme.colors.dark2,
+    color: theme.colors.white,
   },
   detailsView: {
     flexDirection: "row",
@@ -324,7 +392,7 @@ const styles = StyleSheet.create({
   details: {
     fontSize: 18,
     fontWeight: "bold",
-    color: theme.colors.dark2,
+    color: theme.colors.white,
   },
   button1: {
     position: "absolute",

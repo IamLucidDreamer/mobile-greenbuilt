@@ -8,8 +8,8 @@
 // };
 
 const colors = {
-  green1: "#4bc834",
-  green2: "#1e6100",
+  green1: "#017f02",
+  green2: "#06788f",
   cream: "#edddd4",
   cream2: "#edddd4",
   purple: "#140035",

@@ -1,4 +1,7 @@
 import {
+  SafeAreaView,
+  Platform,
+  StatusBar,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,6 +12,7 @@ import {
   Switch,
 } from "react-native";
 import React, { useState } from "react";
+import { StatusBar as Status } from "expo-status-bar";
 import theme from "../../theme";
 import { useDispatch, useSelector } from "react-redux";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -20,25 +24,27 @@ import { Picker } from "@react-native-picker/picker";
 import { logout } from "../../../store/actions/user";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { LinearGradient } from "expo-linear-gradient";
+import { Country, State, City } from "country-state-city";
+import GradientText from "../../components/GradientText";
 
 const ProfileUser = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const userUpdate = Yup.object().shape({});
   const [showDate, setShowDate] = useState(false);
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState([]);
+
+  const countrySelect = Country.getAllCountries();
+  const stateSelect = State.getStatesOfCountry(country);
 
   const handleUserUpdate = (values) => {
     console.log(values);
   };
 
-  const onChangeDOB = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShowDate(false);
-    setDate(currentDate);
-  };
-
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <Status style="dark" />
       <View style={styles.container1}>
         <View style={styles.profileBar}>
           <Text style={styles.text1}>
@@ -47,13 +53,13 @@ const ProfileUser = () => {
           <FontAwesome
             name="user-circle"
             size={65}
-            color={theme.colors.cream2}
+            color={theme.colors.purple}
           />
         </View>
       </View>
       <View style={styles.container2}>
-        <Text style={styles.text3}>Manage Profile</Text>
         <ScrollView style={styles.scroll}>
+          <GradientText text={"Manage Profile"} fontSize={40} />
           <Formik
             initialValues={{
               phone: "",
@@ -68,7 +74,7 @@ const ProfileUser = () => {
             onSubmit={(values) => {
               const { email, password } = values;
               // same shape as initial values
-              console.log(values);
+
               handleUserUpdate(values);
             }}
           >
@@ -118,14 +124,13 @@ const ProfileUser = () => {
                       ]}
                       autoCapitalize="none"
                       keyboardType="phone-pad"
-                      onChangeText={formProps.handleChange("phoneNumber")}
-                      onBlur={formProps.handleBlur("phoneNumber")}
+                      onChangeText={formProps.handleChange("phone")}
+                      onBlur={formProps.handleBlur("phone")}
                       value={formProps.values.phoneNumber}
                     />
-                    {formProps.errors.phoneNumber &&
-                    formProps.touched.phoneNumber ? (
+                    {formProps.errors.phone && formProps.touched.phone ? (
                       <Text style={{ color: theme.colors.dark2 }}>
-                        {formProps.errors.phoneNumber}
+                        {formProps.errors.phone}
                       </Text>
                     ) : null}
                   </View>
@@ -148,7 +153,7 @@ const ProfileUser = () => {
                           mode="date"
                           value={new Date()}
                           display="default"
-                          onChange={() => {
+                          onChange={(event, selectedDate) => {
                             formProps.handleChange("dateOfBirth");
                             setShowDate(false);
                             console.log(formProps.values.dateOfBirth);
@@ -171,17 +176,18 @@ const ProfileUser = () => {
                     />
                     <Picker
                       style={styles.textInput}
-                      onChangeText={formProps.handleChange("email")}
-                      onBlur={formProps.handleBlur("email")}
-                      value={user.data.email}
+                      onValueChange={formProps.handleChange("gender")}
+                      onBlur={formProps.handleBlur("gender")}
+                      value={user.data.gender}
                     >
+                      <Picker.Item label="Select Gender" value="" />
                       <Picker.Item label="Male" value="male" />
                       <Picker.Item label="Female" value="female" />
                       <Picker.Item label="Others" value="others" />
                     </Picker>
-                    {formProps.errors.email && formProps.touched.email ? (
+                    {formProps.errors.gender && formProps.touched.gender ? (
                       <Text style={{ color: theme.colors.dark2 }}>
-                        {formProps.errors.email}
+                        {formProps.errors.gender}
                       </Text>
                     ) : null}
                   </View>
@@ -189,12 +195,20 @@ const ProfileUser = () => {
                     <Feather name="flag" color={theme.colors.dark2} size={28} />
                     <Picker
                       style={styles.textInput}
-                      onChangeText={formProps.handleChange("email")}
-                      onBlur={formProps.handleBlur("email")}
-                      value={user.data.email}
+                      onValueChange={formProps.handleChange("country")}
+                      onBlur={formProps.handleBlur("country")}
                     >
-                      <Picker.Item label="Java" value="java" />
-                      <Picker.Item label="JavaScript" value="js" />
+                      <Picker.item label="Select Country" value="" />
+                      {countrySelect?.map((data, index) => {
+                        return (
+                          <Picker.Item
+                            key={index}
+                            label={data.name}
+                            onChange={setCountry(data.isoCode)}
+                            value={data.name}
+                          />
+                        );
+                      })}
                     </Picker>
                     {formProps.errors.email && formProps.touched.email ? (
                       <Text style={{ color: theme.colors.dark2 }}>
@@ -210,16 +224,22 @@ const ProfileUser = () => {
                     />
                     <Picker
                       style={styles.textInput}
-                      onChangeText={formProps.handleChange("email")}
-                      onBlur={formProps.handleBlur("email")}
-                      value={user.data.email}
+                      onChangeText={formProps.handleChange("state")}
+                      onBlur={formProps.handleBlur("state")}
                     >
-                      <Picker.Item label="Java" value="java" />
-                      <Picker.Item label="JavaScript" value="js" />
+                      <Picker.item label="Select State" value="" />
+                      {stateSelect.map((data, index) => (
+                        <Picker.Item
+                          key={index}
+                          label={data.name}
+                          onChange
+                          value={data.name}
+                        />
+                      ))}
                     </Picker>
-                    {formProps.errors.email && formProps.touched.email ? (
+                    {formProps.errors.state && formProps.touched.state ? (
                       <Text style={{ color: theme.colors.dark2 }}>
-                        {formProps.errors.email}
+                        {formProps.errors.state}
                       </Text>
                     ) : null}
                   </View>
@@ -257,7 +277,7 @@ const ProfileUser = () => {
           </View>
         </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -265,21 +285,15 @@ export default ProfileUser;
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     flex: 1,
-    backgroundColor: theme.colors.cream,
+    backgroundColor: theme.colors.white,
   },
   container1: {
     flex: 1,
-    backgroundColor: theme.colors.green2,
+    backgroundColor: theme.colors.white,
     alignItems: "flex-start",
     justifyContent: "space-around",
-    borderBottomEndRadius: 65,
-    borderBottomStartRadius: 65,
-    shadowColor: "#fff",
-    elevation: 10,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
   },
   profileBar: {
     width: "100%",
@@ -291,7 +305,7 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 24,
     marginTop: 10,
-    color: theme.colors.cream2,
+    color: theme.colors.purple,
   },
   scroll: {
     paddingHorizontal: 20,

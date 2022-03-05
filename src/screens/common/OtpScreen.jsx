@@ -18,9 +18,9 @@ import * as Yup from "yup";
 import theme from "../theme";
 import { StatusBar as Status } from "expo-status-bar";
 
-const ForgotPassword = ({ navigation }) => {
+const OtpScreen = ({ navigation }) => {
   const ForgotSchema = Yup.object().shape({
-    email: Yup.string().required("Required"),
+    email: Yup.string().email("Invalid email").required("Required"),
   });
 
   return (
@@ -31,7 +31,7 @@ const ForgotPassword = ({ navigation }) => {
           resizeMode="contain"
           style={{ width: 350, height: 350 }}
         />
-        <GradientText text={"We'll find it for You"} fontSize={60} />
+        <GradientText text={"Enter the OTP"} fontSize={60} />
       </View>
 
       <View style={styles.footer}>
@@ -40,7 +40,6 @@ const ForgotPassword = ({ navigation }) => {
           validationSchema={ForgotSchema}
           onSubmit={(values) => {
             // same shape as initial values
-            navigation.navigate("OTP");
             console.log(values);
           }}
         >
@@ -52,13 +51,12 @@ const ForgotPassword = ({ navigation }) => {
                   alignSelf: "flex-start",
                   marginLeft: 15,
                   fontSize: 20,
-                  marginBottom: -23,
                   zIndex: 10,
-                  backgroundColor: "#fff",
+
                   paddingHorizontal: 10,
                 }}
               >
-                Phone Number
+                OTP
               </Text>
               <View style={styles.inputField}>
                 <TextInput
@@ -68,10 +66,67 @@ const ForgotPassword = ({ navigation }) => {
                     styles.textInput,
                     {
                       color: theme.colors.dark2,
+                      borderWidth: 2,
+                      borderRadius: 10,
+                      marginHorizontal: 10,
                     },
                   ]}
                   autoCapitalize="none"
-                  keyboardType="number-pad"
+                  keyboardType="email-address"
+                  onChangeText={formProps.handleChange("email")}
+                  onBlur={formProps.handleBlur("email")}
+                  value={formProps.values.email}
+                />
+                <TextInput
+                  placeholder=""
+                  placeholderTextColor={theme.colors.dark2}
+                  style={[
+                    styles.textInput,
+                    {
+                      color: theme.colors.dark2,
+                      borderWidth: 2,
+                      borderRadius: 10,
+                      marginHorizontal: 10,
+                    },
+                  ]}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  onChangeText={formProps.handleChange("email")}
+                  onBlur={formProps.handleBlur("email")}
+                  value={formProps.values.email}
+                />
+                <TextInput
+                  placeholder=""
+                  placeholderTextColor={theme.colors.dark2}
+                  style={[
+                    styles.textInput,
+                    {
+                      color: theme.colors.dark2,
+                      borderWidth: 2,
+                      borderRadius: 10,
+                      marginHorizontal: 10,
+                    },
+                  ]}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  onChangeText={formProps.handleChange("email")}
+                  onBlur={formProps.handleBlur("email")}
+                  value={formProps.values.email}
+                />
+                <TextInput
+                  placeholder=""
+                  placeholderTextColor={theme.colors.dark2}
+                  style={[
+                    styles.textInput,
+                    {
+                      color: theme.colors.dark2,
+                      borderWidth: 2,
+                      borderRadius: 10,
+                      marginHorizontal: 10,
+                    },
+                  ]}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
                   onChangeText={formProps.handleChange("email")}
                   onBlur={formProps.handleBlur("email")}
                   value={formProps.values.email}
@@ -93,7 +148,7 @@ const ForgotPassword = ({ navigation }) => {
                   type="submit"
                   style={styles.btn}
                 >
-                  <Text style={styles.buttonText}>Send OTP</Text>
+                  <Text style={styles.buttonText}>Verify</Text>
                 </TouchableOpacity>
               </LinearGradient>
             </View>
@@ -104,7 +159,7 @@ const ForgotPassword = ({ navigation }) => {
   );
 };
 
-export default ForgotPassword;
+export default OtpScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -149,9 +204,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 8,
     marginBottom: 20,
-    borderWidth: 2,
-    borderRadius: 10,
-    borderBottomColor: "#140035",
   },
   textInput: {
     flex: 1,

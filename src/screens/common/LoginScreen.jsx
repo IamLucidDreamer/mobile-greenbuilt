@@ -77,10 +77,23 @@ const LoginScreen = ({ navigation }) => {
           {(formProps) => (
             <ScrollView>
               <View style={styles.inputContainer}>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Email
+                </Text>
                 <View style={styles.inputField}>
-                  <Feather name="mail" color={theme.colors.dark2} size={28} />
                   <TextInput
-                    placeholder="Your Email"
+                    placeholder=""
                     placeholderTextColor={theme.colors.dark2}
                     style={[
                       styles.textInput,
@@ -100,10 +113,23 @@ const LoginScreen = ({ navigation }) => {
                     </Text>
                   ) : null}
                 </View>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Password
+                </Text>
                 <View style={styles.inputField}>
-                  <Feather name="key" color={theme.colors.dark2} size={28} />
                   <TextInput
-                    placeholder="Your Password"
+                    placeholder=""
                     placeholderTextColor={theme.colors.dark2}
                     style={[
                       styles.textInput,
@@ -183,8 +209,8 @@ const styles = StyleSheet.create({
     flex: 3,
     paddingTop: 30,
     backgroundColor: theme.colors.white,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderRadius: 25,
+    margin: 10,
   },
   text1: {
     fontSize: 30,

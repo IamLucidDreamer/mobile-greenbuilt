@@ -21,11 +21,30 @@ import { signUpNewBusiness } from "../../store/actions/user";
 import theme from "../theme";
 import { StatusBar as Status } from "expo-status-bar";
 import GradientText from "../components/GradientText";
+import { Picker } from "@react-native-picker/picker";
 
 const SignUpBusiness = ({ navigation }) => {
   const dispatch = useDispatch();
-  const handleSignUpBusiness = ({ name, phone, email, password }) => {
-    dispatch(signUpNewBusiness({ name, phone, email, password }));
+  const handleSignUpBusiness = ({
+    name,
+    phone,
+    email,
+    password,
+    ebServiceNo,
+    industryType,
+    gstin,
+  }) => {
+    dispatch(
+      signUpNewBusiness({
+        name,
+        phone,
+        email,
+        password,
+        ebServiceNo,
+        industryType,
+        gstin,
+      })
+    );
   };
 
   const phoneRegExp =
@@ -39,6 +58,9 @@ const SignUpBusiness = ({ navigation }) => {
       .min(8, "Too Short!")
       .max(70, "Too Long!")
       .required("Required"),
+    ebServiceNo: Yup.string().required("Required"),
+    industryType: Yup.string().required("Required"),
+    gstin: Yup.string().required("Required"),
   });
 
   return (
@@ -49,21 +71,58 @@ const SignUpBusiness = ({ navigation }) => {
       </View>
       <View style={styles.footer}>
         <Formik
-          initialValues={{ name: "", phone: "", email: "", password: "" }}
+          initialValues={{
+            name: "",
+            phone: "",
+            email: "",
+            password: "",
+            ebServiceNo: "",
+            industryType: "",
+            gstin: "",
+          }}
           validationSchema={BusinessSchema}
           onSubmit={(values) => {
-            const { name, phone, email, password } = values;
+            const {
+              name,
+              phone,
+              email,
+              password,
+              ebServiceNo,
+              industryType,
+              gstin,
+            } = values;
             console.log(values);
-            handleSignUpBusiness({ name, phone, email, password });
+            handleSignUpBusiness({
+              name,
+              phone,
+              email,
+              password,
+              ebServiceNo,
+              industryType,
+              gstin,
+            });
           }}
         >
           {(formProps) => (
             <ScrollView>
               <View style={styles.inputContainer}>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Name
+                </Text>
                 <View style={styles.inputField}>
-                  <Feather name="user" color={theme.colors.dark2} size={20} />
                   <TextInput
-                    placeholder="Green Corp."
+                    placeholder=""
                     placeholderTextColor={theme.colors.dark2}
                     style={[
                       styles.textInput,
@@ -83,10 +142,23 @@ const SignUpBusiness = ({ navigation }) => {
                     </Text>
                   ) : null}
                 </View>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Phone Number
+                </Text>
                 <View style={styles.inputField}>
-                  <Feather name="phone" color={theme.colors.dark2} size={20} />
                   <TextInput
-                    placeholder="1234567890"
+                    placeholder=""
                     placeholderTextColor={theme.colors.dark2}
                     style={[
                       styles.textInput,
@@ -105,10 +177,23 @@ const SignUpBusiness = ({ navigation }) => {
                     </Text>
                   ) : null}
                 </View>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Email
+                </Text>
                 <View style={styles.inputField}>
-                  <Feather name="mail" color={theme.colors.dark2} size={20} />
                   <TextInput
-                    placeholder="hello@greenbuilt.com"
+                    placeholder=""
                     placeholderTextColor={theme.colors.dark2}
                     style={[
                       styles.textInput,
@@ -128,10 +213,160 @@ const SignUpBusiness = ({ navigation }) => {
                     </Text>
                   ) : null}
                 </View>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  EB Service Number
+                </Text>
+                <View style={styles.inputField}>
+                  <TextInput
+                    placeholder=""
+                    placeholderTextColor={theme.colors.dark2}
+                    style={[
+                      styles.textInput,
+                      {
+                        color: theme.colors.dark2,
+                      },
+                    ]}
+                    autoCapitalize="none"
+                    keyboardType="default"
+                    onChangeText={formProps.handleChange("ebServiceNo")}
+                    onBlur={formProps.handleBlur("ebServiceNo")}
+                    value={formProps.values.ebServiceNo}
+                  />
+                  {formProps.errors.ebServiceNo &&
+                  formProps.touched.ebServiceNo ? (
+                    <Text style={{ color: theme.colors.dark2 }}>
+                      {formProps.errors.ebServiceNo}
+                    </Text>
+                  ) : null}
+                </View>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Industry Type
+                </Text>
+                <View style={styles.inputField}>
+                  <Picker
+                    style={[styles.textInput]}
+                    onValueChange={formProps.handleChange("industryType")}
+                    onBlur={formProps.handleBlur("industryType")}
+                  >
+                    <Picker.Item
+                      label="Select Industry Type"
+                      value=""
+                      style={{ fontSize: 20, fontWeight: "bold" }}
+                    />
+                    <Picker.Item
+                      label="Spinning"
+                      value="Spinning"
+                      style={{ fontSize: 20, fontWeight: "bold" }}
+                    />
+                    <Picker.Item
+                      label="Weaving"
+                      value="Weaving"
+                      style={{ fontSize: 20, fontWeight: "bold" }}
+                    />
+                    <Picker.Item
+                      label="Knitting"
+                      value="Knitting"
+                      style={{ fontSize: 20, fontWeight: "bold" }}
+                    />
+                    <Picker.Item
+                      label="Yarn Processing"
+                      value="Yarn Processing"
+                      style={{ fontSize: 20, fontWeight: "bold" }}
+                    />
+                    <Picker.Item
+                      label="Fabric Processing"
+                      value="Fabric Processing"
+                      style={{ fontSize: 20, fontWeight: "bold" }}
+                    />
+                    <Picker.Item
+                      label="Garment Manufacturing"
+                      value="Garment Manufacturing"
+                      style={{ fontSize: 20, fontWeight: "bold" }}
+                    />
+                  </Picker>
+                  {formProps.errors.industryType &&
+                  formProps.touched.industryType ? (
+                    <Text style={{ color: "#8890A6" }}>
+                      {formProps.errors.industryType}
+                    </Text>
+                  ) : null}
+                </View>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  GSTIN
+                </Text>
+                <View style={styles.inputField}>
+                  <TextInput
+                    placeholder=""
+                    placeholderTextColor={theme.colors.dark2}
+                    style={[
+                      styles.textInput,
+                      {
+                        color: theme.colors.dark2,
+                      },
+                    ]}
+                    autoCapitalize="none"
+                    keyboardType="default"
+                    onChangeText={formProps.handleChange("gstin")}
+                    onBlur={formProps.handleBlur("gstin")}
+                    value={formProps.values.gstin}
+                  />
+                  {formProps.errors.gstin && formProps.touched.gstin ? (
+                    <Text style={{ color: theme.colors.dark2 }}>
+                      {formProps.errors.gstin}
+                    </Text>
+                  ) : null}
+                </View>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    alignSelf: "flex-start",
+                    marginLeft: 15,
+                    fontSize: 20,
+                    marginBottom: -23,
+                    zIndex: 10,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  Password
+                </Text>
                 <View style={styles.inputField}>
                   <Feather name="key" color={theme.colors.dark2} size={20} />
                   <TextInput
-                    placeholder="green@123"
+                    placeholder=""
                     placeholderTextColor={theme.colors.dark2}
                     style={[
                       styles.textInput,

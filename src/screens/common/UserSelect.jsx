@@ -23,14 +23,9 @@ const UserSelect = ({ navigation }) => {
       <Status style="inverted" />
       <View style={styles.header}>
         <Image
-          source={require("../../assets/Powerlogo.png")}
+          source={require("../../assets/logoGreenbuilt.png")}
           resizeMode="contain"
-          style={{ width: 100, height: 100 }}
-        />
-        <Image
-          source={require("../../assets/Powerlogo.png")}
-          resizeMode="contain"
-          style={{ width: 200, height: 200 }}
+          style={{ width: 350, height: 350, marginTop: 10 }}
         />
         <GradientText text={"What Defines You"} fontSize={60} />
       </View>
@@ -80,8 +75,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     backgroundColor: theme.colors.white,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderRadius: 25,
+    margin: 10,
   },
   text1: {
     fontSize: 50,

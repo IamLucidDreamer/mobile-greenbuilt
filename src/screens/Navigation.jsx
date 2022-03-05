@@ -13,7 +13,7 @@ import Dashboard from "./DashBoards/EndUser/Dashboard";
 import DashboardBusiness from "./DashBoards/BusinessUnit/DashboardBusiness";
 import GenerateQR from "./DashBoards/BusinessUnit/GenerateQR";
 import ScannerUser from "./DashBoards/EndUser/ScannerUser";
-import Receipt from "./Receipt";
+import Receipt from "./DashBoards/EndUser/Receipt";
 import Products from "./Products";
 import ScannerBusiness from "./DashBoards/BusinessUnit/ScannerBusiness";
 import { useSelector } from "react-redux";
@@ -22,10 +22,13 @@ import ProfileUser from "./DashBoards/EndUser/ProfileUser";
 import ProductUser from "./DashBoards/EndUser/ProductUser";
 import ProductBusiness from "./DashBoards/BusinessUnit/ProductBusiness";
 import ProfileBusiness from "./DashBoards/BusinessUnit/ProfileBusiness";
+import VerificationPending from "./DashBoards/BusinessUnit/VerificationPending";
+import OtpScreen from "./common/OtpScreen";
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
   const userObj = useSelector((state) => state.user);
+  const isApproved = isEmpty(userObj?.data?.isApproved);
 
   return (
     <NavigationContainer>
@@ -43,6 +46,7 @@ export default function Navigation() {
             <Stack.Screen name="SignUser" component={SignUpEndUser} />
             <Stack.Screen name="SignBusiness" component={SignUpBusiness} />
             <Stack.Screen name="Forgot" component={ForgotPassword} />
+            <Stack.Screen name="OTP" component={OtpScreen} />
           </>
         ) : !isEmpty(userObj) && userObj.data.role === 1 ? (
           //User Stack
@@ -51,9 +55,10 @@ export default function Navigation() {
             <Stack.Screen name="ProfileUser" component={ProfileUser} />
             <Stack.Screen name="ProductUser" component={ProductUser} />
             <Stack.Screen name="ScannerUser" component={ScannerUser} />
+            <Stack.Screen name="Receipt" component={Receipt} />
           </>
-        ) : (
-          //Business Stack
+        ) : //Business Stack
+        !isEmpty(userObj) && isApproved ? (
           <>
             <Stack.Screen
               name="DashboardBusiness"
@@ -64,6 +69,11 @@ export default function Navigation() {
             <Stack.Screen name="GenerateQR" component={GenerateQR} />
             <Stack.Screen name="ScannerBusiness" component={ScannerBusiness} />
           </>
+        ) : (
+          <Stack.Screen
+            name="Verificationscreen"
+            component={VerificationPending}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>

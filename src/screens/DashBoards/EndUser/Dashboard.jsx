@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
 import { LinearGradient } from "expo-linear-gradient";
 import theme from "../../theme";
 import GradientText from "../../components/GradientText";
@@ -44,6 +45,22 @@ const Dashboard = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Status style="dark" />
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingHorizontal: 20,
+        }}
+      >
+        <Feather name={"align-justify"} size={40} />
+        <Image
+          source={require("../../../assets/logoGreenbuilt.png")}
+          resizeMode="contain"
+          style={{ width: 200, height: 60 }}
+        />
+        <Feather name={"bell"} size={40} />
+      </View>
       <View style={styles.profileBar}>
         <Text style={styles.text1}>
           Hello, <Text style={{ fontWeight: "bold" }}>{user.data.name}</Text>
@@ -51,7 +68,7 @@ const Dashboard = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate("ProfileUser")}>
           <FontAwesome
             name="user-circle"
-            size={65}
+            size={55}
             color={theme.colors.purple}
           />
         </TouchableOpacity>
@@ -65,7 +82,119 @@ const Dashboard = ({ navigation }) => {
       <View style={styles.container2}>
         <GradientText text={"SCANS"} fontSize={45} />
         <ScrollView>
-          {scans.map((data, index) => {
+          <TouchableOpacity
+            style={[styles.product]}
+            onPress={() => {
+              navigation.navigate("ProductUser");
+            }}
+          >
+            <View style={styles.productView}>
+              <Image
+                source={{
+                  uri: "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTCGFDWZ1AnbBoUxBJEgz3SUtUWbAyJcR032wf6yZwSfh9il5LrvWnDt2NWcAGLJ8p-afT0CISkOs2ZJjQw_m70qoNeOFpJaLtvUniPlqMgx5x7zaaq--93GQ&usqp=CAE",
+                }}
+                resizeMode="contain"
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginRight: 15,
+                  borderRadius: 20,
+                  backgroundColor: theme.colors.white,
+                }}
+              />
+              <View>
+                <Text style={styles.productPoints}>500</Text>
+                <Text style={styles.productTitle}>Puma Jeans</Text>
+                <Text style={styles.productDesc}>
+                  This is a high Quality Product
+                </Text>
+                <View style={styles.detailsView}>
+                  <Text style={styles.details}>See Details</Text>
+                  <FontAwesome
+                    name="long-arrow-right"
+                    size={20}
+                    color={theme.colors.dark2}
+                    style={{ paddingHorizontal: 10 }}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.product]}
+            onPress={() => {
+              navigation.navigate("Receipt");
+            }}
+          >
+            <View style={styles.productView}>
+              <Image
+                source={{
+                  uri: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSzDZssYoXP-nwE3y9tq06dxMnuuKtOhcFUO3l3e-psSNGsnreohuA3wvX3-hjlx4rBdiVyvbb-tp0O&usqp=CAc",
+                }}
+                resizeMode="contain"
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginRight: 15,
+                  borderRadius: 20,
+                  backgroundColor: theme.colors.white,
+                }}
+              />
+              <View>
+                <Text style={styles.productPoints}>200</Text>
+                <Text style={styles.productTitle}>Nike Shoes</Text>
+                <Text style={styles.productDesc}>
+                  Product made by green Energy.
+                </Text>
+                <View style={styles.detailsView}>
+                  <Text style={styles.details}>See Details</Text>
+                  <FontAwesome
+                    name="long-arrow-right"
+                    size={20}
+                    color={theme.colors.dark2}
+                    style={{ paddingHorizontal: 10 }}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.product]}
+            onPress={() => {
+              navigation.navigate("Receipt");
+            }}
+          >
+            <View style={styles.productView}>
+              <Image
+                source={{
+                  uri: "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcR9bc6KPbNlF9AufhjF73jlq8IWBIOaMfgH2BGNB5iXmw029i9pIMT2XgVp9-Ro48Fy3d4JYRjSptYC4qIQnVTa9rp0eRpxEMn87M-f2tzMJKPMCxprsr1S&usqp=CAE",
+                }}
+                resizeMode="contain"
+                style={{
+                  width: 100,
+                  height: 100,
+                  marginRight: 15,
+                  borderRadius: 20,
+                  backgroundColor: theme.colors.white,
+                }}
+              />
+              <View>
+                <Text style={styles.productPoints}>150</Text>
+                <Text style={styles.productTitle}>Jacket Adidas</Text>
+                <Text style={styles.productDesc}>Saving the Planet.</Text>
+                <View style={styles.detailsView}>
+                  <Text style={styles.details}>See Details</Text>
+                  <FontAwesome
+                    name="long-arrow-right"
+                    size={20}
+                    color={theme.colors.dark2}
+                    style={{ paddingHorizontal: 10 }}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          {/* {scans.map((data, index) => {
             return (
               <TouchableOpacity
                 key={index}
@@ -108,7 +237,7 @@ const Dashboard = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
             );
-          })}
+          })} */}
         </ScrollView>
       </View>
       <LinearGradient
