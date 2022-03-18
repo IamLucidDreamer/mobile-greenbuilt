@@ -24,6 +24,7 @@ import ProductBusiness from "./DashBoards/BusinessUnit/ProductBusiness";
 import ProfileBusiness from "./DashBoards/BusinessUnit/ProfileBusiness";
 import VerificationPending from "./DashBoards/BusinessUnit/VerificationPending";
 import OtpScreen from "./common/OtpScreen";
+import PhoneNumberScreen from "./common/phoneNumberScreen";
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
@@ -44,6 +45,7 @@ export default function Navigation() {
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="UserSelect" component={UserSelect} />
             <Stack.Screen name="SignUser" component={SignUpEndUser} />
+            <Stack.Screen name="PhoneNumber" component={PhoneNumberScreen} />
             <Stack.Screen name="SignBusiness" component={SignUpBusiness} />
             <Stack.Screen name="Forgot" component={ForgotPassword} />
             <Stack.Screen name="OTP" component={OtpScreen} />

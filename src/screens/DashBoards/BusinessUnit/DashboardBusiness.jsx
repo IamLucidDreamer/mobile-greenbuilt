@@ -182,7 +182,7 @@ const DashboardBusiness = ({ navigation }) => {
                     }}
                   >
                     <View style={styles.productView}>
-                      <Image
+                      {/* <Image
                         source={{ uri: data.product.photo }}
                         resizeMode="contain"
                         style={{
@@ -190,10 +190,10 @@ const DashboardBusiness = ({ navigation }) => {
                           height: 100,
                           marginRight: 15,
                           borderRadius: 20,
-                        }}
-                      />
+                        }} 
+                      />*/}
                       <View>
-                        <Text style={styles.productPoints}>
+                        {/* <Text style={styles.productPoints}>
                           {data.product.points}
                         </Text>
                         <Text style={styles.productTitle}>
@@ -201,7 +201,7 @@ const DashboardBusiness = ({ navigation }) => {
                         </Text>
                         <Text style={styles.productDesc}>
                           {data.product.description}
-                        </Text>
+                        </Text> */}
                         <View style={styles.detailsView}>
                           <Text style={styles.details}>See Details</Text>
                           <FontAwesome

@@ -46,7 +46,7 @@ const UserSelect = ({ navigation }) => {
           end={{ x: 0, y: 0.33 }}
           style={styles.button}
         >
-          <TouchableOpacity onPress={() => navigation.navigate("SignUser")}>
+          <TouchableOpacity onPress={() => navigation.navigate("PhoneNumber")}>
             <Text style={styles.buttonText}>Individual</Text>
           </TouchableOpacity>
         </LinearGradient>

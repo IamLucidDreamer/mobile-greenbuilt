@@ -19,6 +19,7 @@ import Button from "../components/Button";
 import { setUserDetails } from "../../store/actions/user";
 import isEmpty from "../../utils/isEmpty";
 import { StatusBar as Status } from "expo-status-bar";
+import * as Animatable from "react-native-animatable";
 
 export default function StartScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -39,13 +40,19 @@ export default function StartScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <Status style="inverted" />
       <View style={styles.header}>
-        <Image
+        <Animatable.Image
+          animation="fadeInUpBig"
+          duration={2000}
           source={require("../../assets/logoGreenbuilt.png")}
           resizeMode="contain"
           style={{ width: 350, height: 350 }}
         />
       </View>
-      <View style={styles.footer}>
+      <Animatable.View
+        style={styles.footer}
+        animation="fadeInUpBig"
+        duration={2000}
+      >
         <GradientText text={"Let's Save the Planet Together"} fontSize={45} />
         <LinearGradient
           colors={["#1e6100", "#4bc834"]}
@@ -57,7 +64,7 @@ export default function StartScreen({ navigation }) {
             <Text style={styles.buttonText}>Get Started</Text>
           </TouchableOpacity>
         </LinearGradient>
-      </View>
+      </Animatable.View>
     </SafeAreaView>
   );
 }

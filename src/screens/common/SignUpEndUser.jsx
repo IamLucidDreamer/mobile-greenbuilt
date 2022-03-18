@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   Platform,
@@ -19,35 +19,43 @@ import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { signUpEndUser } from "../../store/actions/user";
 import theme from "../theme";
+import { Picker } from "@react-native-picker/picker";
+import { countryCode } from "../../utils/phoneNumber";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const SignUpEndUser = ({ navigation }) => {
+  const [dialCode, setDialCode] = useState("+91");
   const dispatch = useDispatch();
   const handleSignUpUser = ({ name, email, password }) => {
     dispatch(signUpEndUser({ name, email, password }));
   };
 
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [show, setShow] = useState(false);
+
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
   const UserSignSchema = Yup.object().shape({
     name: Yup.string().required("Required"),
     email: Yup.string().email("Invalid email").required("Required"),
-    password: Yup.string()
-      .min(8, "Too Short!")
-      .max(70, "Too Long!")
-      .required("Required"),
+    phone: Yup.string().matches(phoneRegExp, "Not valid").required("Required"),
   });
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <GradientText text={"Create An Account"} fontSize={60} />
+        <GradientText text={"Enter Account Details"} fontSize={50} />
       </View>
       <View style={styles.footer}>
         <Formik
-          initialValues={{ name: "", email: "", password: "" }}
+          initialValues={{ name: "", email: "", phoneNumber: "" }}
           validationSchema={UserSignSchema}
           onSubmit={(values) => {
-            const { name, email, password } = values;
+            const { name, email, phoneNumber } = values;
             console.log(values);
-            handleSignUpUser({ name, email, password });
+            navigation.navigate("");
+            // handleSignUpUser({ name, email, password });
           }}
         >
           {(formProps) => (
@@ -137,28 +145,19 @@ const SignUpEndUser = ({ navigation }) => {
                     paddingHorizontal: 10,
                   }}
                 >
-                  Password
+                  Enter Date of Birth
                 </Text>
                 <View style={styles.inputField}>
-                  <TextInput
-                    placeholder=""
-                    placeholderTextColor={theme.colors.dark2}
-                    style={[
-                      styles.textInput,
-                      {
-                        color: theme.colors.dark2,
-                      },
-                    ]}
-                    autoCapitalize="none"
-                    secureTextEntry={true}
-                    keyboardType="visible-password"
-                    onChangeText={formProps.handleChange("password")}
-                    onBlur={formProps.handleBlur("password")}
-                    value={formProps.values.password}
-                  />
-                  {formProps.errors.password && formProps.touched.password ? (
+                  <TouchableOpacity
+                    style={styles.textInput}
+                    onPress={() => setShow(true)}
+                  >
+                    <Text>Enter your Date of Birth</Text>
+                  </TouchableOpacity>
+                  {show && <DateTimePicker value={date} />}
+                  {formProps.errors.email && formProps.touched.email ? (
                     <Text style={{ color: theme.colors.dark2 }}>
-                      {formProps.errors.password}
+                      {formProps.errors.email}
                     </Text>
                   ) : null}
                 </View>
@@ -173,7 +172,7 @@ const SignUpEndUser = ({ navigation }) => {
                     type="submit"
                     style={styles.btn}
                   >
-                    <Text style={styles.buttonText}>Sign Up</Text>
+                    <Text style={styles.buttonText}>Next</Text>
                   </TouchableOpacity>
                 </LinearGradient>
                 <View style={styles.lognin}>

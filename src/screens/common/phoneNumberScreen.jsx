@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   Platform,
@@ -14,64 +14,42 @@ import {
 import Feather from "react-native-vector-icons/Feather";
 import { LinearGradient } from "expo-linear-gradient";
 import { Form, Formik } from "formik";
-import * as Yup from "yup";
-import GreadientText from "../components/GradientText";
-import { useSelector, useDispatch } from "react-redux";
-import { signUpNewBusiness } from "../../store/actions/user";
-import theme from "../theme";
-import { StatusBar as Status } from "expo-status-bar";
 import GradientText from "../components/GradientText";
+import * as Yup from "yup";
+import { useSelector, useDispatch } from "react-redux";
+import { signUpEndUser } from "../../store/actions/user";
+import theme from "../theme";
 import { Picker } from "@react-native-picker/picker";
+import { countryCode } from "../../utils/phoneNumber";
 
-const SignUpBusiness = ({ navigation }) => {
+const PhoneNumberScreen = ({ navigation }) => {
+  const [dialCode, setDialCode] = useState("+91");
   const dispatch = useDispatch();
-  const handleSignUpBusiness = ({
-    name,
-    phone,
-    email,
-    password,
-    ebServiceNo,
-    industryType,
-    gstin,
-  }) => {
-    dispatch(
-      signUpNewBusiness({
-        name,
-        phone,
-        email,
-        password,
-        ebServiceNo,
-        industryType,
-        gstin,
-      })
-    );
+  const handleSignUpUser = ({ name, email, password }) => {
+    dispatch(signUpEndUser({ name, email, password }));
   };
 
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
-  const BusinessSchema = Yup.object().shape({
-    name: Yup.string().required("Required"),
-    phone: Yup.string().matches(phoneRegExp, "Not valid").required("Required"),
+  const UserSignSchema = Yup.object().shape({
+    phoneNumber: Yup.string(),
   });
 
   return (
     <SafeAreaView style={styles.container}>
-      <Status style="inverted" />
       <View style={styles.header}>
-        <GradientText text={"Enter Account Details"} fontSize={50} />
+        <GradientText text={"Enter Phone Number"} fontSize={50} />
       </View>
       <View style={styles.footer}>
         <Formik
-          initialValues={{
-            name: "",
-            phoneNumber: "",
-          }}
-          validationSchema={BusinessSchema}
+          initialValues={{ name: "", email: "", phoneNumber: "" }}
+          validationSchema={UserSignSchema}
           onSubmit={(values) => {
-            const { name, phone } = values;
+            const { name, email, phoneNumber } = values;
             console.log(values);
-            handleOTP({ name, phoneNumber });
+            navigation.navigate("SignUser");
+            // handleSignUpUser({ name, email, password });
           }}
         >
           {(formProps) => (
@@ -89,27 +67,40 @@ const SignUpBusiness = ({ navigation }) => {
                     paddingHorizontal: 10,
                   }}
                 >
-                  Name
+                  Choose Country
                 </Text>
                 <View style={styles.inputField}>
-                  <TextInput
-                    placeholder=""
-                    placeholderTextColor={theme.colors.dark2}
-                    style={[
-                      styles.textInput,
-                      {
-                        color: theme.colors.dark2,
-                      },
-                    ]}
-                    keyboardType="name-phone-pad"
-                    autoCapitalize="words"
-                    onChangeText={formProps.handleChange("name")}
-                    onBlur={formProps.handleBlur("name")}
-                    value={formProps.values.name}
-                  />
-                  {formProps.errors.name && formProps.touched.name ? (
-                    <Text style={{ color: theme.colors.dark2 }}>
-                      {formProps.errors.name}
+                  <Picker
+                    style={[styles.textInput]}
+                    onValueChange={(value) => {
+                      setDialCode(value);
+                    }}
+                  >
+                    <Picker.Item
+                      label="Select Country"
+                      value=""
+                      style={{ fontSize: 20, fontWeight: "bold" }}
+                    />
+                    <Picker.Item
+                      label="India"
+                      value="+91"
+                      style={{ fontSize: 20, fontWeight: "bold" }}
+                    />
+                    {countryCode.map((data, index) => {
+                      return (
+                        <Picker.Item
+                          key={index}
+                          label={data.name}
+                          value={data.dial_code}
+                          style={{ fontSize: 20, fontWeight: "bold" }}
+                        />
+                      );
+                    })}
+                  </Picker>
+                  {formProps.errors.industryType &&
+                  formProps.touched.industryType ? (
+                    <Text style={{ color: "#8890A6" }}>
+                      {formProps.errors.industryType}
                     </Text>
                   ) : null}
                 </View>
@@ -128,6 +119,15 @@ const SignUpBusiness = ({ navigation }) => {
                   Phone Number
                 </Text>
                 <View style={styles.inputField}>
+                  <Text
+                    style={{
+                      borderRightWidth: 1,
+                      paddingRight: 10,
+                      fontSize: 22,
+                    }}
+                  >
+                    {dialCode}
+                  </Text>
                   <TextInput
                     placeholder=""
                     placeholderTextColor={theme.colors.dark2}
@@ -137,14 +137,16 @@ const SignUpBusiness = ({ navigation }) => {
                         color: theme.colors.dark2,
                       },
                     ]}
+                    autoCapitalize="none"
                     keyboardType="number-pad"
-                    onChangeText={formProps.handleChange("phone")}
-                    onBlur={formProps.handleBlur("phone")}
-                    value={formProps.values.phone}
+                    onChangeText={formProps.handleChange("phoneNumber")}
+                    onBlur={formProps.handleBlur("phoneNumber")}
+                    value={formProps.values.phoneNumber}
                   />
-                  {formProps.errors.phone && formProps.touched.phone ? (
+                  {formProps.errors.phoneNumber &&
+                  formProps.touched.phoneNumber ? (
                     <Text style={{ color: theme.colors.dark2 }}>
-                      {formProps.errors.phone}
+                      {formProps.errors.phoneNumber}
                     </Text>
                   ) : null}
                 </View>
@@ -159,7 +161,7 @@ const SignUpBusiness = ({ navigation }) => {
                     type="submit"
                     style={styles.btn}
                   >
-                    <Text style={styles.buttonText}>Verify</Text>
+                    <Text style={styles.buttonText}>Next</Text>
                   </TouchableOpacity>
                 </LinearGradient>
                 <View style={styles.lognin}>
@@ -167,7 +169,9 @@ const SignUpBusiness = ({ navigation }) => {
                   <TouchableOpacity
                     onPress={() => navigation.navigate("Login")}
                   >
-                    <Text style={[styles.logtxt]}>Log In</Text>
+                    <Text style={[styles.logtxt, { fontWeight: "bold" }]}>
+                      Log In
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -179,7 +183,7 @@ const SignUpBusiness = ({ navigation }) => {
   );
 };
 
-export default SignUpBusiness;
+export default PhoneNumberScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -195,7 +199,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   footer: {
-    flex: 1,
+    flex: 2,
     paddingTop: 30,
     backgroundColor: theme.colors.white,
     borderRadius: 25,

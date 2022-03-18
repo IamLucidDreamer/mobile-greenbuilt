@@ -25,6 +25,7 @@ import Errors from "../components/Errors";
 import theme from "../theme";
 import Button from "../components/Button";
 import { StatusBar as Status } from "expo-status-bar";
+import * as Animatable from "react-native-animatable";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -63,7 +64,11 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.header}>
         <GradientText text={"Welcome Back"} fontSize={60} />
       </View>
-      <View style={styles.footer}>
+      <Animatable.View
+        style={styles.footer}
+        animation="fadeInUpBig"
+        duration={2000}
+      >
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={LogInSchema}
@@ -185,7 +190,7 @@ const LoginScreen = ({ navigation }) => {
             </ScrollView>
           )}
         </Formik>
-      </View>
+      </Animatable.View>
     </SafeAreaView>
   );
 };

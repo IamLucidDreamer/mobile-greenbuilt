@@ -29,7 +29,7 @@ const Receipt = ({ navigation }) => {
             marginVertical: 20,
           }}
         >
-          <GradientText text={"Your CO2 Footprint Receipt"} fontSize={25} />
+          <GradientText text={"CO2 offset receipt"} fontSize={25} />
           <Feather
             name={"arrow-up-circle"}
             style={{ color: "#b1b1b1", marginHorizontal: 5 }}
@@ -76,10 +76,25 @@ const Receipt = ({ navigation }) => {
             }}
           >
             <Text style={{ fontSize: 17, color: theme.colors.purple }}>
-              Your Co2 Footprint
+              CO2 offset
             </Text>
             <Text style={{ fontSize: 17, color: theme.colors.purple }}>
               40.00
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: 10,
+            }}
+          >
+            <Text style={{ fontSize: 17, color: theme.colors.purple }}>
+              H2O Saved
+            </Text>
+            <Text style={{ fontSize: 17, color: theme.colors.purple }}>
+              2.82
             </Text>
           </View>
           <View
@@ -91,10 +106,10 @@ const Receipt = ({ navigation }) => {
             }}
           >
             <Text style={{ fontSize: 17, color: theme.colors.purple }}>
-              Reduced
+              Green Energy Consumed
             </Text>
             <Text style={{ fontSize: 17, color: theme.colors.purple }}>
-              2.82
+              200 unit
             </Text>
           </View>
           <View
