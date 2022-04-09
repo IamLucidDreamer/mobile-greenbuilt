@@ -8,6 +8,7 @@ export const SET_TOKEN = "SET_TOKEN";
 export const SET_ID = "SET_ID";
 export const IS_AUTH = "IS_AUTH";
 export const SET_ROLE = "SET_ROLE";
+export const UPDATE_POINTS = "UPDATE_POINTS";
 
 export const SET_LOADER = "SET_LOADER";
 export const SET_ERROR = "SET_ERROR";

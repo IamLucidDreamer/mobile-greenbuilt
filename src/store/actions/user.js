@@ -9,7 +9,7 @@ import {
   setToken,
   setUser,
 } from "../actions/authActions";
-import { errorMessage } from "./appActions";
+import { errorMessage, setPoints } from "./appActions";
 
 const setUserDetails = (data) => ({
   type: LOGIN,
@@ -38,6 +38,7 @@ export const login =
         const user = res.data;
         console.log({ user });
         dispatch(setUserDetails(res.data));
+        dispatch(setPoints(res.data.data.points));
         dispatch(errorMessage({ show: true, message: res.data.message }));
         SecureStore.setItemAsync("jwt", res.data.token);
         SecureStore.setItemAsync("user", JSON.stringify(res.data.data));
@@ -50,14 +51,16 @@ export const login =
   };
 
 export const signUpEndUser =
-  ({ name, email, password }) =>
+  ({ name, email, password, dateOfBirth, phoneNumber }) =>
   (dispatch) => {
-    console.log(name, email, password);
+    console.log(name, email, password, dateOfBirth, phoneNumber);
     axios
       .post("/signup", {
         name,
         email,
         password,
+        dateOfBirth,
+        phoneNumber,
       })
       .then((res) => {
         dispatch(

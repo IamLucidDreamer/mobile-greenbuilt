@@ -21,7 +21,6 @@ import { signUpEndUser } from "../../store/actions/user";
 import theme from "../theme";
 import { Picker } from "@react-native-picker/picker";
 import { countryCode } from "../../utils/phoneNumber";
-import DateTimePicker from "@react-native-community/datetimepicker";
 
 const SignUpEndUser = ({ navigation }) => {
   const [dialCode, setDialCode] = useState("+91");
@@ -154,12 +153,12 @@ const SignUpEndUser = ({ navigation }) => {
                   >
                     <Text>Enter your Date of Birth</Text>
                   </TouchableOpacity>
-                  {show && <DateTimePicker value={date} />}
+                  {/* {show && <DateTimePicker value={date} />}
                   {formProps.errors.email && formProps.touched.email ? (
                     <Text style={{ color: theme.colors.dark2 }}>
                       {formProps.errors.email}
                     </Text>
-                  ) : null}
+                  ) : null} */}
                 </View>
                 <LinearGradient
                   colors={["#1e6100", "#4bc834"]}

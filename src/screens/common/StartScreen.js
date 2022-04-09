@@ -24,17 +24,17 @@ import * as Animatable from "react-native-animatable";
 export default function StartScreen({ navigation }) {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    SecureStore.getItemAsync("jwt").then((token) => {
-      SecureStore.getItemAsync("user").then((res) => {
-        if (!isEmpty(token)) {
-          const user = { data: null };
-          user.data = JSON.parse(res);
-          dispatch(setUserDetails(user));
-        }
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   SecureStore.getItemAsync("jwt").then((token) => {
+  //     SecureStore.getItemAsync("user").then((res) => {
+  //       if (!isEmpty(token)) {
+  //         const user = { data: null };
+  //         user.data = JSON.parse(res);
+  //         dispatch(setUserDetails(user));
+  //       }
+  //     });
+  //   });
+  // }, []);
 
   return (
     <SafeAreaView style={styles.container}>

@@ -1,4 +1,4 @@
-import { SET_LOADER, SET_ERROR } from "../constants/index";
+import { SET_LOADER, SET_ERROR, UPDATE_POINTS } from "../constants/index";
 
 const isLoading = (data) => ({
   type: SET_LOADER,
@@ -10,4 +10,9 @@ const errorMessage = (data) => ({
   payload: data,
 });
 
-export { errorMessage, isLoading };
+const setPoints = (data) => ({
+  type: UPDATE_POINTS,
+  payload: data,
+});
+
+export { errorMessage, isLoading, setPoints };

@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Green Built",
+    "name": "GreenBuilt",
     "slug": "Green_Built",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/Splash_Green_Built.png",
+    "icon": "./src/assets/iconAndroid.png",
     "splash": {
-      "image": "./src/assets/GREENBUILT.png",
+      "image": "./src/assets/logoGreenbuilt.png",
       "resizeMode": "contain",
       "backgroundColor": "#140035"
     },
@@ -24,7 +24,7 @@
         "foregroundImage": "./src/assets/Splash_Green_Built.png",
         "backgroundColor": "#140035"
       },
-      "package": "com.i_am_lucid_dreamer.Green_Built"
+      "package": "com.greenbuilt.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"

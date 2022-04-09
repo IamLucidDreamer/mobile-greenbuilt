@@ -14,18 +14,20 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import theme from "../../theme";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { StatusBar as Status } from "expo-status-bar";
 import * as SecureStore from "expo-secure-store";
 import axios from "../../../helpers/http-helper";
 import GradientText from "../../components/GradientText";
 import { LinearGradient } from "expo-linear-gradient";
+import { logout } from "../../../store/actions/user";
 
 const DashboardBusiness = ({ navigation }) => {
   const user = useSelector((state) => state.user);
   const [scans, setScans] = useState([]);
   const [generate, setGenerate] = useState([]);
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     SecureStore.getItemAsync("jwt").then((token) => {
@@ -68,9 +70,7 @@ const DashboardBusiness = ({ navigation }) => {
         <Text style={styles.text1}>
           Hello, <Text style={{ fontWeight: "bold" }}>{user.data.name}</Text>
         </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("ProfileBusiness")}
-        >
+        <TouchableOpacity onPress={() => dispatch(logout())}>
           <FontAwesome
             name="user-circle"
             size={65}

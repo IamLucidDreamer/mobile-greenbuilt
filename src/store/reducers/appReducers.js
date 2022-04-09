@@ -1,8 +1,9 @@
-import { SET_LOADER, SET_ERROR } from "../constants/index";
+import { SET_LOADER, SET_ERROR, UPDATE_POINTS } from "../constants/index";
 
 const initialState = {
   loader: false,
   error: {},
+  points: 0,
 };
 
 const appActions = (state = initialState, action) => {
@@ -16,6 +17,11 @@ const appActions = (state = initialState, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case UPDATE_POINTS:
+      return {
+        ...state,
+        points: action.payload,
       };
     default:
       return state;

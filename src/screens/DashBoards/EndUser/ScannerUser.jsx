@@ -14,6 +14,7 @@ import * as SecureStore from "expo-secure-store";
 import axios from "../../../helpers/http-helper";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../../store/actions/user";
+import { errorMessage } from "../../../store/actions/appActions";
 
 const ScannerBusiness = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const ScannerBusiness = () => {
         )
         .then((res) => {
           console.log(res.data);
+          dispatch(errorMessage({ show: true, message: res.data.message }));
           dispatch(setUserDetails(res.data));
         })
         .catch((err) => {

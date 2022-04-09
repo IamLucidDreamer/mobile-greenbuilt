@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -11,7 +11,7 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import Feather from "react-native-vector-icons/Feather";
+import Entypo from "react-native-vector-icons/Entypo";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { Form, Formik } from "formik";
@@ -30,6 +30,7 @@ import * as Animatable from "react-native-animatable";
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const [eye, setEye] = useState(true);
 
   console.log({ user });
   const handleSignin = ({ email, password }) => {
@@ -64,11 +65,7 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.header}>
         <GradientText text={"Welcome Back"} fontSize={60} />
       </View>
-      <Animatable.View
-        style={styles.footer}
-        animation="fadeInUpBig"
-        duration={2000}
-      >
+      <View style={styles.footer} animation="fadeInUpBig">
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={LogInSchema}
@@ -143,8 +140,8 @@ const LoginScreen = ({ navigation }) => {
                       },
                     ]}
                     autoCapitalize="none"
-                    secureTextEntry={true}
-                    keyboardType="visible-password"
+                    secureTextEntry={eye}
+                    autoCorrect={false}
                     onChangeText={formProps.handleChange("password")}
                     onBlur={formProps.handleBlur("password")}
                     value={formProps.values.password}
@@ -154,6 +151,12 @@ const LoginScreen = ({ navigation }) => {
                       {formProps.errors.password}
                     </Text>
                   ) : null}
+                  <TouchableOpacity
+                    onPress={() => setEye(!eye)}
+                    style={{ paddingLeft: 5 }}
+                  >
+                    <Entypo name={eye ? "eye" : "eye-with-line"} size={30} />
+                  </TouchableOpacity>
                 </View>
                 <TouchableOpacity
                   style={styles.forgotbtn}
@@ -190,7 +193,7 @@ const LoginScreen = ({ navigation }) => {
             </ScrollView>
           )}
         </Formik>
-      </Animatable.View>
+      </View>
     </SafeAreaView>
   );
 };
