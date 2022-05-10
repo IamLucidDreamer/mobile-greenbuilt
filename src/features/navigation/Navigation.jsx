@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { useSelector } from "react-redux";
 import isEmpty from "../../utils/isEmpty";
+import { StatusBar as Status } from "expo-status-bar";
 
 // Import Screens
 import StartScreen from "../startScreen/Index";
@@ -17,6 +18,7 @@ import ScannerUser from "../endUser/scanner/Index";
 
 import DashboardBusiness from "../businessUser/dashboard/Index";
 import ScannerBusiness from "../businessUser/scanner/Index";
+import { Statistics } from "../businessUser/statistics/Index";
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
@@ -25,6 +27,7 @@ export default function Navigation() {
 
   return (
     <NavigationContainer>
+      <Status style="inverted" />
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -51,7 +54,8 @@ export default function Navigation() {
               name="DashboardBusiness"
               component={DashboardBusiness}
             />
-            <Stack.Screen name="ProductBusiness" component={ScannerBusiness} />
+            <Stack.Screen name="scannerBusiness" component={ScannerBusiness} />
+            <Stack.Screen name="statistics" component={Statistics} />
           </>
         ) : (
           <Stack.Screen

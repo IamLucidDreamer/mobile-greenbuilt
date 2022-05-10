@@ -1,6 +1,7 @@
 const colors = {
   green1: "#017f02",
   green2: "#06788f",
+  greenMain:"#47C030",
   cream: "#edddd4",
   cream2: "#edddd4",
   purple: "#140035",

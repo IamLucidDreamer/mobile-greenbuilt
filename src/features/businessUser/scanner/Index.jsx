@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
+  SafeAreaView,
   StyleSheet,
   Button,
   Image,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { LinearGradient } from "expo-linear-gradient";
@@ -13,14 +15,16 @@ import GradientText from "../../components/GradientText";
 import * as SecureStore from "expo-secure-store";
 import axios from "../../../helpers/http-helper";
 import { useDispatch } from "react-redux";
-import { setUserDetails } from "../../../store/actions/user";
 import { errorMessage, setPoints } from "../../../store/actions/appActions";
+import * as Animatable from "react-native-animatable";
 import { StatusBar as Status } from "expo-status-bar";
+import theme from "../../../Config/theme/Index";
 
 const ScannerBusiness = ({ navigation }) => {
   const dispatch = useDispatch();
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -32,7 +36,7 @@ const ScannerBusiness = ({ navigation }) => {
   const handleBarCodeScanned = ({ data }) => {
     setScanned(true);
     SecureStore.getItemAsync("jwt").then((token) => {
-      console.log(data);
+      console.log(data, "Hello");
       axios
         .post(
           `/qr/consume/${data}`,
@@ -50,8 +54,8 @@ const ScannerBusiness = ({ navigation }) => {
           dispatch(setPoints(res.data.availableUserPoints));
         })
         .catch((err) => {
-          console.log("hello");
-          console.log(err);
+          console.log(err?.response?.data?.message);
+          setMessage(err?.response?.data?.message);
         });
     });
   };
@@ -64,14 +68,18 @@ const ScannerBusiness = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <>
       <Status style="inverted" />
       {scanned ? null : (
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={[
-            StyleSheet.absoluteFillObject,
-            { justifyContent: "center", alignContent: "center" },
+            {
+              flex: 1,
+              justifyContent: "center",
+              alignContent: "center",
+              backgroundColor: "#000",
+            },
           ]}
         >
           <Image
@@ -82,35 +90,43 @@ const ScannerBusiness = ({ navigation }) => {
         </BarCodeScanner>
       )}
       {scanned && (
-        <>
-          <View style={styles.header}>
-            <Image
-              source={require("../../../assets/Splash_Green_Built.png")}
-              resizeMode="contain"
-              style={{ width: 180, height: 180 }}
-            />
-          </View>
-          <View style={styles.footer}>
-            <View style={{ marginBottom: 25 }}>
-              <GradientText
-                text={"Looks like that's not one of Ours"}
-                fontSize={40}
+        <SafeAreaView style={styles.container}>
+          <ImageBackground
+            source={require("../../../assets/startScreenBackground.png")}
+            resizeMode="cover"
+            style={styles.container}
+          >
+            <View style={styles.header}>
+              <Animatable.Image
+                animation="fadeInUpBig"
+                duration={2000}
+                source={require("../../../assets/logoGreenbuilt.png")}
+                resizeMode="contain"
+                style={{ width: "95%", height: 350 }}
               />
             </View>
-            <LinearGradient
-              colors={["#1e6100", "#4bc834"]}
-              start={{ x: 1, y: 1 }}
-              end={{ x: 0, y: 0.33 }}
-              style={styles.button}
-            >
-              <TouchableOpacity onPress={() => setScanned(false)}>
+            <View style={styles.footer}>
+              <Text style={styles.text1}>Something is not right!</Text>
+              <Text style={[styles.text1, { fontWeight: "bold" }]}>
+                {message}
+              </Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => setScanned(false)}
+              >
                 <Text style={styles.buttonText}>Scan Again</Text>
               </TouchableOpacity>
-            </LinearGradient>
-          </View>
-        </>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate("DashboardBusiness")}
+              >
+                <Text style={styles.buttonText}>Back to Dashboard</Text>
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+        </SafeAreaView>
       )}
-    </View>
+    </>
   );
 };
 
@@ -124,42 +140,36 @@ const styles = StyleSheet.create({
     backgroundColor: "#140035",
   },
   header: {
-    flex: 2,
     alignItems: "center",
     justifyContent: "center",
   },
   footer: {
-    flex: 1,
-    backgroundColor: "#fcfffc",
-    justifyContent: "flex-start",
-    borderTopLeftRadius: 35,
-    borderTopRightRadius: 35,
+    backgroundColor: theme.colors.white,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    borderTopEndRadius: 25,
+    borderTopStartRadius: 25,
     paddingVertical: 30,
-    paddingHorizontal: 20,
-    shadowColor: "#29d38a",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
-    elevation: 10,
   },
   text1: {
-    fontSize: 35,
-    fontWeight: "bold",
-    marginBottom: 45,
-    color: "#140035",
+    color: theme.colors.dark2,
+    paddingHorizontal: 5,
+    fontSize: 45,
+    marginBottom: 20,
   },
   button: {
     alignSelf: "center",
     width: "90%",
     paddingVertical: 16,
     paddingHorizontal: 5,
-    backgroundColor: "#29d38a",
-    borderRadius: 20,
+    backgroundColor: theme.colors.greenMain,
+    borderRadius: 7,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
     elevation: 4,
+    marginBottom: 20,
   },
   buttonText: {
     fontSize: 22,

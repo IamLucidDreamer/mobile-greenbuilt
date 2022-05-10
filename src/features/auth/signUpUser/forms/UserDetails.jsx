@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  ImageBackground,
+  KeyboardAvoidingView,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import { LinearGradient } from "expo-linear-gradient";
@@ -18,11 +20,10 @@ import GradientText from "../../../components/GradientText";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { signUpEndUser } from "../../../../store/actions/user";
-import theme from "../../../../screens/theme";
-import { Picker } from "@react-native-picker/picker";
-import { countryCode } from "../../../../utils/phoneNumber";
+import theme from "../../../../Config/theme/Index";
 import DatePicker from "react-native-datepicker";
 import Entypo from "react-native-vector-icons/Entypo";
+import * as Animatable from "react-native-animatable";
 
 const SignUpEndUser = (props) => {
   const [dialCode, setDialCode] = useState("+91");
@@ -52,218 +53,231 @@ const SignUpEndUser = (props) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <GradientText text={"Enter Account Details"} fontSize={50} />
-      </View>
-      <View style={styles.footer}>
-        <Formik
-          initialValues={{ name: "", email: "", password: "", dateOfBirth: "" }}
-          validationSchema={UserSignSchema}
-          onSubmit={(values) => {
-            const { name, email, password, dateOfBirth } = values;
-            console.log(values);
-            const phoneNumber = props.phoneNumber;
-            handleSignUpUser({
-              name,
-              email,
-              password,
-              dateOfBirth,
-              phoneNumber,
-            });
-          }}
-        >
-          {(formProps) => (
-            <ScrollView>
-              <View style={styles.inputContainer}>
-                <Text
-                  style={{
-                    textAlign: "left",
-                    alignSelf: "flex-start",
-                    marginLeft: 15,
-                    fontSize: 20,
-                    marginBottom: -23,
-                    zIndex: 10,
-                    backgroundColor: "#fff",
-                    paddingHorizontal: 10,
-                  }}
-                >
-                  Name
-                </Text>
-                <View style={styles.inputField}>
-                  <TextInput
-                    placeholder=""
-                    placeholderTextColor={theme.colors.dark2}
-                    style={[
-                      styles.textInput,
-                      {
-                        color: theme.colors.dark2,
-                      },
-                    ]}
-                    keyboardType="name-phone-pad"
-                    autoCapitalize="words"
-                    onChangeText={formProps.handleChange("name")}
-                    onBlur={formProps.handleBlur("name")}
-                    value={formProps.values.name}
-                  />
-                  {formProps.errors.name && formProps.touched.name ? (
-                    <Text style={{ color: theme.colors.dark2 }}>
-                      {formProps.errors.name}
-                    </Text>
-                  ) : null}
-                </View>
-                <Text
-                  style={{
-                    textAlign: "left",
-                    alignSelf: "flex-start",
-                    marginLeft: 15,
-                    fontSize: 20,
-                    marginBottom: -23,
-                    zIndex: 10,
-                    backgroundColor: "#fff",
-                    paddingHorizontal: 10,
-                  }}
-                >
-                  Email
-                </Text>
-                <View style={styles.inputField}>
-                  <TextInput
-                    placeholder=""
-                    placeholderTextColor={theme.colors.dark2}
-                    style={[
-                      styles.textInput,
-                      {
-                        color: theme.colors.dark2,
-                      },
-                    ]}
-                    autoCapitalize="none"
-                    keyboardType="email-address"
-                    onChangeText={formProps.handleChange("email")}
-                    onBlur={formProps.handleBlur("email")}
-                    value={formProps.values.email}
-                  />
-                  {formProps.errors.email && formProps.touched.email ? (
-                    <Text style={{ color: theme.colors.dark2 }}>
-                      {formProps.errors.email}
-                    </Text>
-                  ) : null}
-                </View>
-                <Text
-                  style={{
-                    textAlign: "left",
-                    alignSelf: "flex-start",
-                    marginLeft: 15,
-                    fontSize: 20,
-                    marginBottom: -23,
-                    zIndex: 10,
-                    backgroundColor: "#fff",
-                    paddingHorizontal: 10,
-                  }}
-                >
-                  Enter Date of Birth
-                </Text>
-                <View style={styles.inputField}>
-                  <DatePicker
-                    style={styles.textInput}
-                    date={date}
-                    placeholder="Select Date"
-                    format="DD-MM-YYYY"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    onDateChange={(date) => {
-                      formProps.setFieldValue("dateOfBirth", date);
-                      setDate(date);
+    <SafeAreaView style={{ flex: 1 }}>
+      <ImageBackground
+        source={require("../../../../assets/startScreenBackground.png")}
+        resizeMode="cover"
+        style={styles.container}
+      >
+        <View style={styles.header}>
+          <Animatable.Image
+            animation="fadeInUpBig"
+            duration={800}
+            source={require("../../../../assets/logoGreenbuilt.png")}
+            resizeMode="contain"
+            style={{ width: "95%", height: 100 }}
+          />
+        </View>
+        <View style={styles.footer}>
+          <Formik
+            initialValues={{
+              name: "",
+              email: "",
+              password: "",
+              dateOfBirth: "",
+            }}
+            validationSchema={UserSignSchema}
+            onSubmit={(values) => {
+              const { name, email, password, dateOfBirth } = values;
+              console.log(values);
+              const phoneNumber = props.phoneNumber;
+              handleSignUpUser({
+                name,
+                email,
+                password,
+                dateOfBirth,
+                phoneNumber,
+              });
+            }}
+          >
+            {(formProps) => (
+              <ScrollView>
+                <KeyboardAvoidingView style={styles.inputContainer}>
+                  <Text style={styles.text1}>Your Details</Text>
+                  <Text
+                    style={{
+                      textAlign: "left",
+                      alignSelf: "flex-start",
+                      marginLeft: 15,
+                      fontSize: 20,
+                      marginBottom: -23,
+                      zIndex: 10,
+                      backgroundColor: "#fff",
+                      paddingHorizontal: 10,
                     }}
-                    customStyles={{
-                      dateIcon: {
-                        width: 0.1,
-                        height: 0.1,
-                      },
-                      dateInput: {
-                        borderWidth: 0,
-                      },
-                      // ... You can check the source to find the other keys.
-                    }}
-                  />
-                  {formProps.errors.dateOfBirth &&
-                  formProps.touched.dateOfBirth ? (
-                    <Text style={{ color: theme.colors.dark2 }}>
-                      {formProps.errors.dateOfBirth}
-                    </Text>
-                  ) : null}
-                </View>
-                <Text
-                  style={{
-                    textAlign: "left",
-                    alignSelf: "flex-start",
-                    marginLeft: 15,
-                    fontSize: 20,
-                    marginBottom: -23,
-                    zIndex: 10,
-                    backgroundColor: "#fff",
-                    paddingHorizontal: 10,
-                  }}
-                >
-                  Password
-                </Text>
-                <View style={styles.inputField}>
-                  <TextInput
-                    placeholder=""
-                    placeholderTextColor={theme.colors.dark2}
-                    style={[
-                      styles.textInput,
-                      {
-                        color: theme.colors.dark2,
-                      },
-                    ]}
-                    autoCapitalize="none"
-                    secureTextEntry={eye}
-                    autoCorrect={false}
-                    onChangeText={formProps.handleChange("password")}
-                    onBlur={formProps.handleBlur("password")}
-                    value={formProps.values.password}
-                  />
-                  {formProps.errors.password && formProps.touched.password ? (
-                    <Text style={{ color: theme.colors.dark2 }}>
-                      {formProps.errors.password}
-                    </Text>
-                  ) : null}
-                  <TouchableOpacity
-                    onPress={() => setEye(!eye)}
-                    style={{ paddingLeft: 5 }}
                   >
-                    <Entypo name={eye ? "eye" : "eye-with-line"} size={30} />
-                  </TouchableOpacity>
-                </View>
-                <LinearGradient
-                  colors={["#1e6100", "#4bc834"]}
-                  start={{ x: 1, y: 1 }}
-                  end={{ x: 0, y: 0.33 }}
-                  style={styles.button}
-                >
+                    Name
+                  </Text>
+                  <View style={styles.inputField}>
+                    <TextInput
+                      placeholder=""
+                      placeholderTextColor={theme.colors.dark2}
+                      style={[
+                        styles.textInput,
+                        {
+                          color: theme.colors.dark2,
+                        },
+                      ]}
+                      keyboardType="name-phone-pad"
+                      autoCapitalize="words"
+                      onChangeText={formProps.handleChange("name")}
+                      onBlur={formProps.handleBlur("name")}
+                      value={formProps.values.name}
+                    />
+                    {formProps.errors.name && formProps.touched.name ? (
+                      <Text style={{ color: theme.colors.dark2 }}>
+                        {formProps.errors.name}
+                      </Text>
+                    ) : null}
+                  </View>
+                  <Text
+                    style={{
+                      textAlign: "left",
+                      alignSelf: "flex-start",
+                      marginLeft: 15,
+                      fontSize: 20,
+                      marginBottom: -23,
+                      zIndex: 10,
+                      backgroundColor: "#fff",
+                      paddingHorizontal: 10,
+                    }}
+                  >
+                    Email
+                  </Text>
+                  <View style={styles.inputField}>
+                    <TextInput
+                      placeholder=""
+                      placeholderTextColor={theme.colors.dark2}
+                      style={[
+                        styles.textInput,
+                        {
+                          color: theme.colors.dark2,
+                        },
+                      ]}
+                      autoCapitalize="none"
+                      keyboardType="email-address"
+                      onChangeText={formProps.handleChange("email")}
+                      onBlur={formProps.handleBlur("email")}
+                      value={formProps.values.email}
+                    />
+                    {formProps.errors.email && formProps.touched.email ? (
+                      <Text style={{ color: theme.colors.dark2 }}>
+                        {formProps.errors.email}
+                      </Text>
+                    ) : null}
+                  </View>
+                  <Text
+                    style={{
+                      textAlign: "left",
+                      alignSelf: "flex-start",
+                      marginLeft: 15,
+                      fontSize: 20,
+                      marginBottom: -23,
+                      zIndex: 10,
+                      backgroundColor: "#fff",
+                      paddingHorizontal: 10,
+                    }}
+                  >
+                    Enter Date of Birth
+                  </Text>
+                  <View style={styles.inputField}>
+                    <DatePicker
+                      style={styles.textInput}
+                      date={date}
+                      placeholder="Select Date"
+                      format="DD-MM-YYYY"
+                      confirmBtnText="Confirm"
+                      cancelBtnText="Cancel"
+                      onDateChange={(date) => {
+                        formProps.setFieldValue("dateOfBirth", date);
+                        setDate(date);
+                      }}
+                      customStyles={{
+                        dateIcon: {
+                          width: 0.1,
+                          height: 0.1,
+                        },
+                        dateInput: {
+                          borderWidth: 0,
+                        },
+                        // ... You can check the source to find the other keys.
+                      }}
+                    />
+                    {formProps.errors.dateOfBirth &&
+                    formProps.touched.dateOfBirth ? (
+                      <Text style={{ color: theme.colors.dark2 }}>
+                        {formProps.errors.dateOfBirth}
+                      </Text>
+                    ) : null}
+                  </View>
+                  <Text
+                    style={{
+                      textAlign: "left",
+                      alignSelf: "flex-start",
+                      marginLeft: 15,
+                      fontSize: 20,
+                      marginBottom: -23,
+                      zIndex: 10,
+                      backgroundColor: "#fff",
+                      paddingHorizontal: 10,
+                    }}
+                  >
+                    Password
+                  </Text>
+                  <View style={styles.inputField}>
+                    <TextInput
+                      placeholder=""
+                      placeholderTextColor={theme.colors.dark2}
+                      style={[
+                        styles.textInput,
+                        {
+                          color: theme.colors.dark2,
+                        },
+                      ]}
+                      autoCapitalize="none"
+                      secureTextEntry={eye}
+                      autoCorrect={false}
+                      onChangeText={formProps.handleChange("password")}
+                      onBlur={formProps.handleBlur("password")}
+                      value={formProps.values.password}
+                    />
+                    {formProps.errors.password && formProps.touched.password ? (
+                      <Text style={{ color: theme.colors.dark2 }}>
+                        {formProps.errors.password}
+                      </Text>
+                    ) : null}
+                    <TouchableOpacity
+                      onPress={() => setEye(!eye)}
+                      style={{ paddingLeft: 5 }}
+                    >
+                      <Entypo name={eye ? "eye" : "eye-with-line"} size={30} />
+                    </TouchableOpacity>
+                  </View>
                   <TouchableOpacity
                     onPress={formProps.handleSubmit}
                     type="submit"
-                    style={styles.btn}
+                    style={styles.button}
                   >
                     <Text style={styles.buttonText}>Next</Text>
                   </TouchableOpacity>
-                </LinearGradient>
-                <View style={styles.lognin}>
-                  <Text style={styles.logtxt}>Already have an Account ? </Text>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate("Login")}
-                  >
-                    <Text style={[styles.logtxt, { fontWeight: "bold" }]}>
-                      Log In
+                  <View style={styles.lognin}>
+                    <Text style={styles.logtxt}>
+                      Already have an Account ?{" "}
                     </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </ScrollView>
-          )}
-        </Formik>
-      </View>
+                    <TouchableOpacity
+                      onPress={() => props.navigation.navigate("Login")}
+                    >
+                      <Text style={[styles.logtxt, { fontWeight: "bold" }]}>
+                        Log In
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </KeyboardAvoidingView>
+              </ScrollView>
+            )}
+          </Formik>
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -277,18 +291,16 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.purple,
   },
   header: {
-    flex: 1,
-    backgroundColor: theme.colors.purple,
-    paddingHorizontal: 20,
+    height: 155,
     alignItems: "flex-start",
-    justifyContent: "flex-end",
+    justifyContent: "center",
   },
   footer: {
-    flex: 2,
-    paddingTop: 30,
+    flex: 1,
+    paddingTop: 10,
     backgroundColor: theme.colors.white,
-    borderRadius: 25,
-    margin: 10,
+    borderTopEndRadius: 25,
+    borderTopStartRadius: 25,
   },
   inputContainer: {
     flex: 1,
@@ -298,10 +310,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text1: {
-    fontSize: 45,
-    marginBottom: 20,
-    paddingHorizontal: 20,
     color: theme.colors.dark2,
+    paddingHorizontal: 5,
+    fontSize: 45,
+    alignSelf: "flex-start",
+    marginBottom: 20,
   },
   inputField: {
     flexDirection: "row",
@@ -332,11 +345,11 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: "center",
-    width: "90%",
+    width: "100%",
     paddingVertical: 16,
     paddingHorizontal: 5,
-    backgroundColor: "#29d38a",
-    borderRadius: 20,
+    backgroundColor: theme.colors.greenMain,
+    borderRadius: 5,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,

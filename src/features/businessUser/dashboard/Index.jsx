@@ -54,8 +54,7 @@ const DashboardBusiness = ({ navigation }) => {
         style={{
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "space-between",
-          paddingHorizontal: 20,
+          justifyContent: "center",
         }}
       >
         <Image
@@ -63,27 +62,27 @@ const DashboardBusiness = ({ navigation }) => {
           resizeMode="contain"
           style={{ width: 200, height: 60 }}
         />
-        <TouchableOpacity onPress={() => dispatch(logout())}>
-          <FontAwesome
-            name="user-circle"
-            size={55}
-            color={theme.colors.purple}
-          />
-        </TouchableOpacity>
       </View>
       <View style={styles.profileBar}>
         <Text style={styles.text1}>
           Hello, <Text style={{ fontWeight: "bold" }}>{user.data.name}</Text>
         </Text>
+        <TouchableOpacity onPress={() => dispatch(logout())}>
+          <FontAwesome
+            name="user-circle"
+            size={35}
+            color={theme.colors.purple}
+          />
+        </TouchableOpacity>
       </View>
       <View style={styles.container1}>
         <View style={styles.pointsView}>
           <Text style={styles.text2}>Total Points</Text>
-          <GradientText text={points} fontSize={60} />
+          <Text style={styles.points}>{points}</Text>
         </View>
       </View>
       <View style={styles.container2}>
-        <GradientText text={"SCANS"} fontSize={45} />
+        <Text style={styles.scansText}>Recent Scans</Text>
         <ScrollView>
           {scans.map((data, index) => {
             {
@@ -92,41 +91,32 @@ const DashboardBusiness = ({ navigation }) => {
                   key={index}
                   style={[styles.product]}
                   onPress={() => {
-                    navigation.navigate("ProductUser");
+                    navigation.navigate("statistics", { productData: data });
                   }}
                 >
+                  <Image
+                    source={{
+                      uri: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHw%3D&w=1000&q=80",
+                    }}
+                    resizeMode="contain"
+                    style={{
+                      width: "25%",
+                      height: "100%",
+                      marginRight: 10,
+                      borderRadius: 20,
+                    }}
+                  />
                   <View style={styles.productView}>
-                    <Image
-                      source={{ uri: data.product.photo }}
-                      resizeMode="contain"
-                      style={{
-                        width: 100,
-                        height: 100,
-                        marginRight: 15,
-                        borderRadius: 20,
-                      }}
-                    />
-                    <View>
-                      <Text style={styles.productPoints}>
-                        {data.product.points}
-                      </Text>
-                      <Text style={styles.productTitle}>
-                        {data.product.title}
-                      </Text>
-                      <Text style={styles.productDesc}>
-                        {data.product.description}
-                      </Text>
-                      <View style={styles.detailsView}>
-                        <Text style={styles.details}>See Details</Text>
-                        <FontAwesome
-                          name="long-arrow-right"
-                          size={20}
-                          color={theme.colors.dark2}
-                          style={{ paddingHorizontal: 10 }}
-                        />
-                      </View>
+                    <Text style={styles.productTitle}>
+                      {data.product.title}
+                    </Text>
+                    <View style={styles.detailsView}>
+                      <Text style={styles.details}>15-aug-2022</Text>
                     </View>
                   </View>
+                  <Text style={styles.productPoints}>
+                    {data.product.points}
+                  </Text>
                 </TouchableOpacity>
               ) : null;
             }
@@ -139,7 +129,9 @@ const DashboardBusiness = ({ navigation }) => {
         end={{ x: 0, y: 0.33 }}
         style={styles.button}
       >
-        <TouchableOpacity onPress={() => navigation.navigate("userScanner")}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("scannerBusiness")}
+        >
           <MaterialIcons
             name="qr-code-scanner"
             color={theme.colors.white}
@@ -160,7 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
   },
   container1: {
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     backgroundColor: theme.colors.purple,
     alignItems: "flex-start",
     justifyContent: "space-around",
@@ -168,15 +160,15 @@ const styles = StyleSheet.create({
   },
   profileBar: {
     width: "100%",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingHorizontal: 10,
+    paddingBottom: 15,
+    paddingTop: 5,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   text1: {
-    fontSize: 24,
-    marginTop: 10,
+    fontSize: 20,
     color: theme.colors.purple,
   },
   pointsView: {
@@ -187,67 +179,67 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text2: {
-    fontSize: 24,
+    fontSize: 20,
     color: theme.colors.white,
     textAlign: "center",
   },
   points: {
-    fontSize: 40,
-    paddingBottom: 5,
+    fontSize: 48,
     fontWeight: "bold",
-    color: theme.colors.dark2,
+    color: theme.colors.greenMain,
     textAlign: "center",
+  },
+  scansText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: theme.colors.purple,
+    marginVertical: 12,
   },
   container2: {
     flex: 3,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   product: {
     marginBottom: 15,
-    backgroundColor: theme.colors.purple,
-    paddingVertical: 15,
-    paddingHorizontal: 15,
+    borderWidth: 2,
+    backgroundColor: theme.colors.white,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
     borderRadius: 15,
-    shadowColor: "#fff",
+    shadowColor: "#140035",
     elevation: 10,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,
     shadowRadius: 4,
-  },
-  productView: {
-    width: "75%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
+  productView: {
+    width: "55%",
+  },
   text3: {
     fontSize: 35,
-    color: theme.colors.white,
+    color: theme.colors.purple,
     paddingVertical: 10,
   },
   productPoints: {
+    width: "15%",
+    marginLeft: 5,
     fontWeight: "bold",
     fontSize: 20,
-    color: theme.colors.white,
+    color: theme.colors.greenMain,
   },
   productTitle: {
     fontSize: 20,
-    color: theme.colors.white,
+    color: theme.colors.purple,
     fontWeight: "bold",
   },
-  productDesc: {
-    fontSize: 15,
-    color: theme.colors.white,
-  },
-  detailsView: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
+
   details: {
     fontSize: 18,
     fontWeight: "bold",
-    color: theme.colors.white,
+    color: theme.colors.purple,
   },
   button: {
     position: "absolute",

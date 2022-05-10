@@ -149,9 +149,9 @@ android {
     signingConfigs {
         debug {
             storeFile file('my-upload-key.keystore')
-            storePassword 'manas@zedd'
+            storePassword 'helloworld'
             keyAlias 'my-key-alias'
-            keyPassword 'manas@zedd'
+            keyPassword 'helloworld'
         }
     }
     buildTypes {

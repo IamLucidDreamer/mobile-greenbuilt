@@ -10,13 +10,14 @@ import {
   StatusBar,
   TextInput,
   ScrollView,
+  ImageBackground,
+  KeyboardAvoidingView
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { StatusBar as Status } from "expo-status-bar";
-import GradientText from "../../../components/GradientText";
 import theme from "../../../../Config/theme/Index";
+import * as Animatable from "react-native-animatable";
 
 export const VerifyOtp = (props) => {
   async function verifyOtp(otp) {
@@ -33,9 +34,20 @@ export const VerifyOtp = (props) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{flex:1}}>
+      <ImageBackground
+        source={require("../../../../assets/startScreenBackground.png")}
+        resizeMode="cover"
+        style={styles.container}
+      >
       <View style={styles.header}>
-        <GradientText text={"Enter the OTP"} fontSize={60} />
+      <Animatable.Image
+            animation="fadeInUpBig"
+            duration={800}
+            source={require("../../../../assets/logoGreenbuilt.png")}
+            resizeMode="contain"
+            style={{ width: "95%", height: 100 }}
+          />
       </View>
 
       <View style={styles.footer}>
@@ -49,7 +61,8 @@ export const VerifyOtp = (props) => {
         >
           {(formProps) => (
             <ScrollView>
-              <View style={styles.inputContainer}>
+              <KeyboardAvoidingView style={styles.inputContainer}>
+                <Text style={styles.text1}>Verify It's You</Text>
                 <Text
                   style={{
                     textAlign: "left",
@@ -86,32 +99,25 @@ export const VerifyOtp = (props) => {
                     </Text>
                   ) : null}
                 </View>
-
-                <LinearGradient
-                  colors={["#1e6100", "#4bc834"]}
-                  start={{ x: 1, y: 1 }}
-                  end={{ x: 0, y: 0.33 }}
-                  style={styles.button}
-                >
                   <TouchableOpacity
                     onPress={formProps.handleSubmit}
                     type="submit"
-                    style={styles.btn}
+                    style={styles.button}
                   >
                     <Text style={styles.buttonText}>Verify</Text>
                   </TouchableOpacity>
-                </LinearGradient>
                 <Text style={{ fontSize: 16, paddingVertical: 10 }}>
                   OTP sent Successfully to {props.phoneNumber}
                 </Text>
                 <TouchableOpacity onPress={() => props.changeFormNumber(1)}>
                   <Text style={{ fontSize: 16 }}>Change Phone Number</Text>
                 </TouchableOpacity>
-              </View>
+              </KeyboardAvoidingView>
             </ScrollView>
           )}
         </Formik>
       </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -123,26 +129,23 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.purple,
   },
   header: {
-    flex: 3,
-    paddingHorizontal: 20,
+    height: 155,
     alignItems: "flex-start",
-    justifyContent: "flex-end",
-    borderBottomEndRadius: 65,
-    borderBottomStartRadius: 65,
+    justifyContent: "center",
   },
   footer: {
-    flex: 2,
+    flex: 1,
+    paddingTop: 10,
     backgroundColor: theme.colors.white,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    borderRadius: 25,
-    margin: 10,
+    borderTopEndRadius: 25,
+    borderTopStartRadius: 25,
   },
   text1: {
-    fontSize: 50,
-    marginBottom: 40,
-    paddingHorizontal: 20,
     color: theme.colors.dark2,
+    paddingHorizontal: 5,
+    fontSize: 45,
+    alignSelf: "flex-start",
+    marginBottom: 20,
   },
   inputContainer: {
     flex: 1,
@@ -172,11 +175,11 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: "center",
-    width: 350,
+    width: "100%",
     paddingVertical: 16,
     paddingHorizontal: 5,
-    backgroundColor: "#29d38a",
-    borderRadius: 20,
+    backgroundColor: theme.colors.greenMain,
+    borderRadius: 5,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,
