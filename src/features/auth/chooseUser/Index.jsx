@@ -21,15 +21,12 @@ import * as Animatable from "react-native-animatable";
 const ChooseUser = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ImageBackground
-        source={require("../../../assets/startScreenBackground.png")}
-        resizeMode="cover"
+      <LinearGradient
+        colors={[theme.colors.primaryBg, theme.colors.primaryBg2]}
         style={styles.container}
       >
         <View style={styles.header}>
-          <Animatable.Image
-            animation="fadeInUpBig"
-            duration={2000}
+          <Image
             source={require("../../../assets/logoGreenbuilt.png")}
             resizeMode="contain"
             style={{ width: "95%", height: 350, marginBottom: 50 }}
@@ -40,14 +37,14 @@ const ChooseUser = ({ navigation }) => {
           duration={2000}
           style={styles.footer}
         >
-          <Animatable.Text
+          <Text
             animation="zoomIn"
             duration={1000}
             delay={1200}
             style={styles.text1}
           >
             What Defines You
-          </Animatable.Text>
+          </Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate("SignBusiness")}
@@ -61,7 +58,7 @@ const ChooseUser = ({ navigation }) => {
             <Text style={styles.buttonText}>Individual</Text>
           </TouchableOpacity>
         </Animatable.View>
-      </ImageBackground>
+      </LinearGradient>
     </SafeAreaView>
   );
 };
@@ -82,37 +79,35 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: theme.colors.white,
-    alignItems: "center",
     justifyContent: "space-evenly",
-    borderTopEndRadius: 25,
-    borderTopStartRadius: 25,
-    paddingTop: 30,
-    paddingBottom: 15,
+    borderTopEndRadius: 40,
+    borderTopStartRadius: 40,
+    paddingVertical: 30,
+    padding: 20,
   },
   text1: {
-    color: theme.colors.dark2,
-    paddingHorizontal: 5,
+    textAlign: "left",
+    color: theme.colors.primaryBg,
     fontSize: 45,
     marginBottom: 20,
+    fontWeight: "700",
   },
   button: {
     alignSelf: "center",
-    width: "90%",
-    paddingVertical: 16,
-    paddingHorizontal: 5,
-    backgroundColor: theme.colors.greenMain,
-    borderRadius: 7,
+    width: "100%",
+    paddingVertical: 17,
+    paddingHorizontal: 20,
+    backgroundColor: theme.colors.primaryGreen,
+    borderRadius: 10,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
     elevation: 4,
-    marginBottom: 20,
+    marginVertical: 10,
   },
   buttonText: {
-    fontSize: 22,
-    color: "#fcfffc",
-    fontWeight: "bold",
+    fontSize: 18,
     textAlign: "center",
+    color: theme.colors.white,
+    fontWeight: "bold",
+    marginRight: 20,
   },
 });
