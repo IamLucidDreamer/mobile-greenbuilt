@@ -23,6 +23,7 @@ import * as SecureStore from "expo-secure-store";
 import { authenticated, isBusinessUser } from "../../../helpers/auth-helper";
 import theme from "../../../Config/theme/Index";
 import * as Animatable from "react-native-animatable";
+import { BlurView } from "expo-blur";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -58,11 +59,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ImageBackground
-        source={require("../../../assets/startScreenBackground.png")}
-        resizeMode="cover"
-        style={styles.container}
-      >
+      <LinearGradient colors={["#0a2c3c", "#00404c"]} style={styles.container}>
         <View style={styles.header}>
           <Animatable.Image
             animation="fadeInUpBig"
@@ -87,23 +84,9 @@ const LoginScreen = ({ navigation }) => {
               <ScrollView>
                 <KeyboardAvoidingView style={styles.inputContainer}>
                   <Text style={styles.text1}>Welcome Back</Text>
-                  <Text
-                    style={{
-                      textAlign: "left",
-                      alignSelf: "flex-start",
-                      marginLeft: 15,
-                      fontSize: 20,
-                      marginBottom: -23,
-                      zIndex: 10,
-                      backgroundColor: "#fff",
-                      paddingHorizontal: 10,
-                    }}
-                  >
-                    Email
-                  </Text>
                   <View style={styles.inputField}>
                     <TextInput
-                      placeholder=""
+                      placeholder="Email"
                       placeholderTextColor={theme.colors.dark2}
                       style={[styles.textInput]}
                       autoCapitalize="none"
@@ -113,28 +96,14 @@ const LoginScreen = ({ navigation }) => {
                       value={formProps.values.email}
                     />
                     {formProps.errors.email && formProps.touched.email ? (
-                      <Text style={{ color: theme.colors.dark2 }}>
+                      <Text style={{ color: theme.colors.white }}>
                         {formProps.errors.email}
                       </Text>
                     ) : null}
                   </View>
-                  <Text
-                    style={{
-                      textAlign: "left",
-                      alignSelf: "flex-start",
-                      marginLeft: 15,
-                      fontSize: 20,
-                      marginBottom: -23,
-                      zIndex: 10,
-                      backgroundColor: "#fff",
-                      paddingHorizontal: 10,
-                    }}
-                  >
-                    Password
-                  </Text>
                   <View style={styles.inputField}>
                     <TextInput
-                      placeholder=""
+                      placeholder="Password"
                       placeholderTextColor={theme.colors.dark2}
                       style={[styles.textInput]}
                       autoCapitalize="none"
@@ -145,7 +114,7 @@ const LoginScreen = ({ navigation }) => {
                       value={formProps.values.password}
                     />
                     {formProps.errors.password && formProps.touched.password ? (
-                      <Text style={{ color: theme.colors.dark2 }}>
+                      <Text style={{ color: theme.colors.white }}>
                         {formProps.errors.password}
                       </Text>
                     ) : null}
@@ -153,7 +122,11 @@ const LoginScreen = ({ navigation }) => {
                       onPress={() => setEye(!eye)}
                       style={{ paddingLeft: 5 }}
                     >
-                      <Entypo name={eye ? "eye" : "eye-with-line"} size={30} />
+                      <Entypo
+                        name={eye ? "eye" : "eye-with-line"}
+                        size={30}
+                        style={{ color: theme.colors.white }}
+                      />
                     </TouchableOpacity>
                   </View>
                   <TouchableOpacity
@@ -184,7 +157,7 @@ const LoginScreen = ({ navigation }) => {
             )}
           </Formik>
         </View>
-      </ImageBackground>
+      </LinearGradient>
     </SafeAreaView>
   );
 };
@@ -204,15 +177,18 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    paddingTop: 10,
     backgroundColor: theme.colors.white,
-    borderTopEndRadius: 25,
-    borderTopStartRadius: 25,
+    justifyContent: "space-evenly",
+    borderTopEndRadius: 40,
+    borderTopStartRadius: 40,
+    paddingVertical: 30,
+    padding: 20,
   },
   text1: {
-    color: theme.colors.dark2,
+    color: theme.colors.primaryBg,
     paddingHorizontal: 5,
     fontSize: 45,
+    fontWeight: "bold",
     alignSelf: "flex-start",
     marginBottom: 20,
   },
@@ -220,27 +196,24 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     marginTop: 20,
-    paddingHorizontal: 15,
     alignItems: "center",
   },
   inputField: {
     flexDirection: "row",
-    backgroundColor: theme.colors.white,
+    borderBottomWidth: 2,
     alignItems: "center",
-    height: 60,
+    height: 50,
     marginTop: 10,
     paddingHorizontal: 8,
     marginBottom: 20,
-    borderWidth: 2,
     borderRadius: 10,
-    borderBottomColor: "#140035",
   },
   textInput: {
     flex: 1,
-    fontSize: 24,
+    fontSize: 18,
     paddingLeft: 10,
     paddingVertical: 10,
-    color: theme.colors.dark2,
+    color: theme.colors.primaryBg,
   },
   forgotbtn: {
     alignSelf: "flex-end",
@@ -248,7 +221,7 @@ const styles = StyleSheet.create({
   },
   forgottext: {
     fontSize: 16,
-    color: theme.colors.purple,
+    color: theme.colors.primaryBg,
   },
   button: {
     alignSelf: "center",
@@ -278,7 +251,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   signtxt: {
-    color: theme.colors.purple,
+    color: theme.colors.primaryBg,
     fontSize: 15,
   },
 });

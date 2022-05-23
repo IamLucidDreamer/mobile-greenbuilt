@@ -11,7 +11,6 @@ import {
   ImageBackground,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import GradientText from "../components/GradientText";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as SecureStore from "expo-secure-store";
@@ -23,10 +22,12 @@ import { StatusBar as Status } from "expo-status-bar";
 import * as Animatable from "react-native-animatable";
 import { setPoints } from "../../store/actions/appActions";
 import axios from "../../helpers/http-helper";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 export default function StartScreen({ navigation }) {
   const dispatch = useDispatch();
 
+  // To check Wheather the User is Logged in or Not
   useEffect(() => {
     SecureStore.getItemAsync("jwt").then((token) => {
       SecureStore.getItemAsync("user").then((res) => {
@@ -54,34 +55,48 @@ export default function StartScreen({ navigation }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Status style="inverted" />
-      <ImageBackground
-        source={require("../../assets/startScreenBackground.png")}
-        resizeMode="cover"
+      <LinearGradient
+        colors={[theme.colors.primaryBg, theme.colors.primaryBg2]}
         style={styles.container}
       >
         <View style={styles.header}>
-          <Animatable.Image
-            animation="fadeInUpBig"
-            duration={2000}
+          <Image
             source={require("../../assets/logoGreenbuilt.png")}
             resizeMode="contain"
-            style={{ width: "95%", height: 350, marginBottom: 50 }}
+            style={{ width: "95%", height: 350, marginBottom: 90 }}
           />
         </View>
         <Animatable.View
           style={styles.footer}
           animation="fadeInUpBig"
           duration={2000}
+          intensity={10}
+          tint="dark"
         >
-          <Animatable.Text animation="zoomIn" duration={1000} delay={1200} style={styles.text1}>Let's Save the Planet Together</Animatable.Text>
+          <Text
+            animation="zoomIn"
+            duration={1000}
+            delay={1200}
+            style={styles.text1}
+          >
+            Let's Save the Planet Together
+          </Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate("Login")}
           >
-            <Text style={styles.buttonText}>Get Started</Text>
+            <Text animation={"fadeInRight"} style={styles.buttonText}>
+              Get Started
+            </Text>
+            <FontAwesome5
+              animation={"fadeInRight"}
+              name={"arrow-right"}
+              size={18}
+              color={"#fff"}
+            />
           </TouchableOpacity>
         </Animatable.View>
-      </ImageBackground>
+      </LinearGradient>
     </SafeAreaView>
   );
 }
@@ -90,7 +105,6 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     flex: 1,
-    backgroundColor: theme.colors.purple,
     justifyContent: "flex-end",
   },
   header: {
@@ -99,35 +113,35 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: theme.colors.white,
-    alignItems: "center",
     justifyContent: "space-evenly",
-    borderTopEndRadius: 25,
-    borderTopStartRadius: 25,
+    borderTopEndRadius: 40,
+    borderTopStartRadius: 40,
     paddingVertical: 30,
+    padding: 20,
   },
   text1: {
-    color: theme.colors.dark2,
-    paddingHorizontal: 5,
+    textAlign: "left",
+    color: theme.colors.primaryBg,
     fontSize: 45,
     marginBottom: 20,
+    fontWeight: "700",
   },
   button: {
     alignSelf: "center",
-    width: "90%",
-    paddingVertical: 16,
-    paddingHorizontal: 5,
-    backgroundColor: theme.colors.greenMain,
-    borderRadius: 7,
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 17,
+    paddingHorizontal: 20,
+    backgroundColor: theme.colors.primaryGreen,
+    borderRadius: 10,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
     elevation: 4,
   },
   buttonText: {
-    fontSize: 22,
-    color: "#fcfffc",
+    fontSize: 18,
+    color: theme.colors.white,
     fontWeight: "bold",
-    textAlign: "center",
+    marginRight: 20,
   },
 });

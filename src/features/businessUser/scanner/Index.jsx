@@ -50,7 +50,7 @@ const ScannerBusiness = ({ navigation }) => {
         .then((res) => {
           console.log(res.data);
           dispatch(errorMessage({ show: true, message: res.data.message }));
-          navigation.navigate("Dashboard");
+          navigation.navigate("receipt", { receiptData: res.data });
           dispatch(setPoints(res.data.availableUserPoints));
         })
         .catch((err) => {
