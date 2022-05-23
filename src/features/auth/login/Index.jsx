@@ -226,14 +226,11 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: "center",
     width: "100%",
-    paddingVertical: 16,
-    paddingHorizontal: 5,
-    backgroundColor: theme.colors.greenMain,
-    borderRadius: 5,
+    paddingVertical: 17,
+    paddingHorizontal: 20,
+    backgroundColor: theme.colors.primaryGreen,
+    borderRadius: 10,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
     elevation: 4,
   },
   buttonText: {
