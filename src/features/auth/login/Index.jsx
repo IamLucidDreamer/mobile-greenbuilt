@@ -69,7 +69,7 @@ const LoginScreen = ({ navigation }) => {
             style={{ width: "95%", height: 100 }}
           />
         </View>
-        <View style={styles.footer} animation="fadeInUpBig">
+        <View style={styles.footer}>
           <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={LogInSchema}
@@ -140,7 +140,7 @@ const LoginScreen = ({ navigation }) => {
                     type="submit"
                     style={styles.button}
                   >
-                    <Text style={styles.buttonText}>LogIn</Text>
+                    <Text style={styles.buttonText}>Log In</Text>
                   </TouchableOpacity>
                   <View style={styles.signup}>
                     <Text style={styles.signtxt}>Don't have an Account ? </Text>
@@ -234,9 +234,10 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   buttonText: {
-    fontSize: 22,
-    color: "#fcfffc",
+    fontSize: 18,
+    color: theme.colors.white,
     fontWeight: "bold",
+    marginRight: 20,
     textAlign: "center",
   },
   signup: {

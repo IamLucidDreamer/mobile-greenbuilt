@@ -7,7 +7,9 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { useSelector } from "react-redux";
 import isEmpty from "../../utils/isEmpty";
 import { StatusBar as Status } from "expo-status-bar";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Antdesign from "react-native-vector-icons/AntDesign";
+
+import theme from "../../Config/theme/Index";
 
 // Import Screens
 import StartScreen from "../startScreen/Index";
@@ -70,9 +72,17 @@ export default function Navigation() {
           </Stack.Navigator> */}
           <Tab.Navigator
             initialRouteName="Home"
-            activeColor="#000"
-            inactiveColor="#000"
-            barStyle={{ backgroundColor: "#fff", borderRadius:50 }}
+            activeColor={theme.colors.primaryGreen}
+            inactiveColor={theme.colors.primaryBg}
+            shifting={false}
+            barStyle={{
+              backgroundColor: theme.colors.white,
+              position: "absolute",
+              overflow: "hidden",
+              borderTopLeftRadius: 15,
+              borderTopRightRadius: 15,
+              paddingVertical: 2,
+            }}
           >
             <Tab.Screen
               name="Home"
@@ -80,17 +90,17 @@ export default function Navigation() {
               options={{
                 tabBarLabel: "Home",
                 tabBarIcon: ({ color }) => (
-                  <MaterialCommunityIcons name="bell" color={color} size={26} />
+                  <Antdesign name="home" color={color} size={26} />
                 ),
               }}
             />
             <Tab.Screen
-              name="Rewards"
+              name="History"
               component={ScannerBusiness}
               options={{
-                tabBarLabel: "Rewards",
+                tabBarLabel: "History",
                 tabBarIcon: ({ color }) => (
-                  <MaterialCommunityIcons name="bell" color={color} size={26} />
+                  <Antdesign name="clockcircleo" color={color} size={26} />
                 ),
               }}
             />
@@ -98,21 +108,30 @@ export default function Navigation() {
               name="Scan"
               component={ScannerBusiness}
               options={{
-                tabBarLabel: "Rewards",
+                tabBarLabel: "Scanner",
+                tabBarIcon: ({ color }) => (
+                  <Antdesign name="qrcode" color={color} size={26} />
+                ),
               }}
             />
             <Tab.Screen
               name="Community"
               component={ScannerBusiness}
               options={{
-                tabBarLabel: "Rewards",
+                tabBarLabel: "support",
+                tabBarIcon: ({ color }) => (
+                  <Antdesign name="contacts" color={color} size={26} />
+                ),
               }}
             />
             <Tab.Screen
               name="Profile"
               component={ScannerBusiness}
               options={{
-                tabBarLabel: "Rewards",
+                tabBarLabel: "Profile",
+                tabBarIcon: ({ color }) => (
+                  <Antdesign name="user" color={color} size={26} />
+                ),
               }}
             />
           </Tab.Navigator>

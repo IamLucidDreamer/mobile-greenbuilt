@@ -55,7 +55,7 @@ const DashboardBusiness = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Status style="dark" />
+      <Status style="light" />
       <LinearGradient colors={["#0a2c3c", "#00404c"]} style={{ flex: 1 }}>
         <View
           style={{
@@ -206,7 +206,7 @@ const DashboardBusiness = ({ navigation }) => {
                 textAlign: "center",
               }}
             >
-              {points * 0.935}
+              {Math.round(points * 0.935)}
             </Text>
           </View>
           <View
@@ -236,7 +236,7 @@ const DashboardBusiness = ({ navigation }) => {
                 textAlign: "center",
               }}
             >
-              {points * 2.59}
+              {Math.round(points * 2.59)}
             </Text>
           </View>
           <View
@@ -266,7 +266,7 @@ const DashboardBusiness = ({ navigation }) => {
                 textAlign: "center",
               }}
             >
-              {points * 2.59}
+              {Math.round(points * 2.59)}
             </Text>
           </View>
         </ScrollView>
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     flex: 1,
-    backgroundColor: theme.colors.white,
+    backgroundColor: "#000",
   },
   container1: {
     marginHorizontal: 10,

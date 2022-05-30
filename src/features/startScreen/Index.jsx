@@ -69,8 +69,7 @@ export default function StartScreen({ navigation }) {
         <Animatable.View
           style={styles.footer}
           animation="fadeInUpBig"
-          duration={2000}
-          intensity={10}
+          duration={1000}
           tint="dark"
         >
           <Text

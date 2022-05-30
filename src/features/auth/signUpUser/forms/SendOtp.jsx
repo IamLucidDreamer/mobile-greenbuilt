@@ -8,7 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useState } from "react";
 import theme from "../../../../Config/theme/Index";
@@ -18,6 +18,7 @@ import { Picker } from "@react-native-picker/picker";
 import { countryCode } from "../../../../utils/phoneNumber";
 import auth from "@react-native-firebase/auth";
 import * as Animatable from "react-native-animatable";
+import { LinearGradient } from "expo-linear-gradient";
 
 export const SendOtp = (props) => {
   const [label, setLabel] = useState({
@@ -27,6 +28,7 @@ export const SendOtp = (props) => {
 
   const getOtp = async (phoneNumber) => {
     console.log("Running");
+    console.log(`${label.dialCode}${phoneNumber}`)
     const consfirmation = await auth().signInWithPhoneNumber(
       `${label.dialCode}${phoneNumber}`
     );
@@ -34,6 +36,9 @@ export const SendOtp = (props) => {
       props.changeFormNumber(2);
       props.setPhoneNumberFunction(`${label.dialCode}${phoneNumber}`);
       props.setConfirmObjFunction(consfirmation);
+    }
+    else{
+      console.log(consfirmation);
     }
   };
 
@@ -43,11 +48,7 @@ export const SendOtp = (props) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ImageBackground
-        source={require("../../../../assets/startScreenBackground.png")}
-        resizeMode="cover"
-        style={styles.container}
-      >
+      <LinearGradient colors={["#0a2c3c", "#00404c"]} style={styles.container}>
         <View style={styles.header}>
           <Animatable.Image
             animation="fadeInUpBig"
@@ -70,21 +71,7 @@ export const SendOtp = (props) => {
             {(formProps) => (
               <ScrollView>
                 <KeyboardAvoidingView style={styles.inputContainer}>
-                <Text style={styles.text1}>Create A New Account</Text>
-                  <Text
-                    style={{
-                      textAlign: "left",
-                      alignSelf: "flex-start",
-                      marginLeft: 15,
-                      fontSize: 20,
-                      marginBottom: -23,
-                      zIndex: 10,
-                      backgroundColor: "#fff",
-                      paddingHorizontal: 10,
-                    }}
-                  >
-                    Choose Country
-                  </Text>
+                  <Text style={styles.text1}>Create A New Account</Text>
                   <View style={styles.inputField}>
                     <Picker
                       style={[styles.textInput]}
@@ -126,26 +113,12 @@ export const SendOtp = (props) => {
                       </Text>
                     ) : null}
                   </View>
-                  <Text
-                    style={{
-                      textAlign: "left",
-                      alignSelf: "flex-start",
-                      marginLeft: 15,
-                      fontSize: 20,
-                      marginBottom: -23,
-                      zIndex: 10,
-                      backgroundColor: "#fff",
-                      paddingHorizontal: 10,
-                    }}
-                  >
-                    Phone Number
-                  </Text>
                   <View style={styles.inputField}>
                     <Text
                       style={{
                         borderRightWidth: 1,
                         paddingRight: 10,
-                        fontSize: 22,
+                        fontSize: 18,
                       }}
                     >
                       {label.dialCode}
@@ -196,7 +169,7 @@ export const SendOtp = (props) => {
             )}
           </Formik>
         </View>
-      </ImageBackground>
+      </LinearGradient>
     </SafeAreaView>
   );
 };
@@ -214,69 +187,59 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    paddingTop: 10,
     backgroundColor: theme.colors.white,
-    borderTopEndRadius: 25,
-    borderTopStartRadius: 25,
+    justifyContent: "space-evenly",
+    borderTopEndRadius: 40,
+    borderTopStartRadius: 40,
+    paddingVertical: 30,
+    padding: 20,
+  },
+  text1: {
+    color: theme.colors.primaryBg,
+    paddingHorizontal: 5,
+    fontSize: 45,
+    fontWeight: "bold",
+    alignSelf: "flex-start",
+    marginBottom: 20,
   },
   inputContainer: {
     flex: 1,
     flexDirection: "column",
     marginTop: 20,
-    paddingHorizontal: 10,
     alignItems: "center",
-  },
-  text1: {
-    color: theme.colors.dark2,
-    paddingHorizontal: 5,
-    fontSize: 45,
-    alignSelf: "flex-start",
-    marginBottom: 20,
   },
   inputField: {
     flexDirection: "row",
-    backgroundColor: theme.colors.white,
+    borderBottomWidth: 2,
     alignItems: "center",
-    height: 60,
+    height: 50,
     marginTop: 10,
     paddingHorizontal: 8,
     marginBottom: 20,
-    borderWidth: 2,
     borderRadius: 10,
-    borderBottomColor: "#140035",
   },
   textInput: {
     flex: 1,
-    fontSize: 24,
+    fontSize: 18,
     paddingLeft: 10,
     paddingVertical: 10,
-    color: "#05375a",
-  },
-  forgotbtn: {
-    alignSelf: "flex-end",
-    marginBottom: 10,
-  },
-  forgottext: {
-    fontSize: 16,
-    color: "#000",
+    color: theme.colors.primaryBg,
   },
   button: {
     alignSelf: "center",
     width: "100%",
-    paddingVertical: 16,
-    paddingHorizontal: 5,
-    backgroundColor: theme.colors.greenMain,
-    borderRadius: 5,
+    paddingVertical: 17,
+    paddingHorizontal: 20,
+    backgroundColor: theme.colors.primaryGreen,
+    borderRadius: 10,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
     elevation: 4,
   },
   buttonText: {
-    fontSize: 22,
-    color: "#fcfffc",
+    fontSize: 18,
+    color: theme.colors.white,
     fontWeight: "bold",
+    marginRight: 20,
     textAlign: "center",
   },
   lognin: {
