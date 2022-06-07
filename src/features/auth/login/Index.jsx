@@ -96,7 +96,7 @@ const LoginScreen = ({ navigation }) => {
                       value={formProps.values.email}
                     />
                     {formProps.errors.email && formProps.touched.email ? (
-                      <Text style={{ color: theme.colors.white }}>
+                      <Text style={{ color: theme.colors.primaryBg }}>
                         {formProps.errors.email}
                       </Text>
                     ) : null}
@@ -114,7 +114,7 @@ const LoginScreen = ({ navigation }) => {
                       value={formProps.values.password}
                     />
                     {formProps.errors.password && formProps.touched.password ? (
-                      <Text style={{ color: theme.colors.white }}>
+                      <Text style={{ color: theme.colors.primaryBg }}>
                         {formProps.errors.password}
                       </Text>
                     ) : null}
@@ -124,8 +124,8 @@ const LoginScreen = ({ navigation }) => {
                     >
                       <Entypo
                         name={eye ? "eye" : "eye-with-line"}
-                        size={30}
-                        style={{ color: theme.colors.white }}
+                        size={23}
+                        style={{ color: theme.colors.primaryBg }}
                       />
                     </TouchableOpacity>
                   </View>
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   text1: {
     color: theme.colors.primaryBg,
     paddingHorizontal: 5,
-    fontSize: 45,
+    fontSize: 40,
     fontWeight: "bold",
     alignSelf: "flex-start",
     marginBottom: 20,

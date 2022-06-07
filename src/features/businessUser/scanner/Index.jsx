@@ -22,16 +22,20 @@ import theme from "../../../Config/theme/Index";
 
 const ScannerBusiness = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [show, setShow] = useState(true);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [message, setMessage] = useState("");
 
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === "granted");
     })();
-  }, []);
+  }, [scanned]);
+
+  useEffect(() => {
+    setTimeout(() => setShow(!show), 1200);
+  });
 
   const handleBarCodeScanned = ({ data }) => {
     setScanned(true);
@@ -55,16 +59,52 @@ const ScannerBusiness = ({ navigation }) => {
         })
         .catch((err) => {
           console.log(err?.response?.data?.message);
-          setMessage(err?.response?.data?.message);
+          dispatch(errorMessage({ show: true, message: err?.response?.data?.message }));
         });
     });
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return (
+      <LinearGradient colors={["#0a2c3c", "#00404c"]} style={styles.container}>
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <Text
+            style={{
+              color: theme.colors.white,
+              fontSize: 22,
+              marginBottom: 15,
+              paddingHorizontal: 10,
+              textAlign: "center",
+            }}
+          >
+            Requesting for permission to access camera.
+          </Text>
+        </View>
+      </LinearGradient>
+    );
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return (
+      <LinearGradient colors={["#0a2c3c", "#00404c"]} style={styles.container}>
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <Text
+            style={{
+              color: theme.colors.white,
+              fontSize: 22,
+              marginBottom: 15,
+              paddingHorizontal: 10,
+              textAlign: "center",
+            }}
+          >
+            Camera Permission denied Please go to settings and Grant it.
+          </Text>
+        </View>
+      </LinearGradient>
+    );
   }
 
   return (
@@ -82,7 +122,9 @@ const ScannerBusiness = ({ navigation }) => {
             },
           ]}
         >
-          <Image
+          <Animatable.Image
+            animation={show ? "fadeIn" : "fadeOut"}
+            duration={800}
             source={require("../../../assets/QRScanner.png")}
             resizeMode="contain"
             style={{ width: 350, height: 350, alignSelf: "center" }}
@@ -90,40 +132,28 @@ const ScannerBusiness = ({ navigation }) => {
         </BarCodeScanner>
       )}
       {scanned && (
-        <SafeAreaView style={styles.container}>
-          <ImageBackground
-            source={require("../../../assets/startScreenBackground.png")}
-            resizeMode="cover"
+        <SafeAreaView style={{ flex: 1 }}>
+          <LinearGradient
+            colors={["#0a2c3c", "#00404c"]}
             style={styles.container}
           >
             <View style={styles.header}>
-              <Animatable.Image
-                animation="fadeInUpBig"
-                duration={2000}
+              <Image
                 source={require("../../../assets/logoGreenbuilt.png")}
                 resizeMode="contain"
                 style={{ width: "95%", height: 350 }}
               />
             </View>
             <View style={styles.footer}>
-              <Text style={styles.text1}>Something is not right!</Text>
-              <Text style={[styles.text1, { fontWeight: "bold" }]}>
-                {message}
-              </Text>
+              <Text style={styles.text1}>Wanna Scan Again</Text>
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => setScanned(false)}
               >
                 <Text style={styles.buttonText}>Scan Again</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate("DashboardBusiness")}
-              >
-                <Text style={styles.buttonText}>Back to Dashboard</Text>
-              </TouchableOpacity>
             </View>
-          </ImageBackground>
+          </LinearGradient>
         </SafeAreaView>
       )}
     </>
@@ -145,36 +175,34 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: theme.colors.white,
-    alignItems: "center",
     justifyContent: "space-evenly",
     borderTopEndRadius: 25,
     borderTopStartRadius: 25,
-    paddingVertical: 30,
+    paddingHorizontal:20,
+    paddingBottom: 100,
   },
   text1: {
-    color: theme.colors.dark2,
-    paddingHorizontal: 5,
-    fontSize: 45,
-    marginBottom: 20,
+    fontSize: 35,
+    fontWeight: "bold",
+    color: theme.colors.primaryBg,
+    paddingTop: 20,
   },
   button: {
     alignSelf: "center",
-    width: "90%",
-    paddingVertical: 16,
-    paddingHorizontal: 5,
-    backgroundColor: theme.colors.greenMain,
-    borderRadius: 7,
+    width: "100%",
+    paddingVertical: 17,
+    paddingHorizontal: 20,
+    backgroundColor: theme.colors.primaryGreen,
+    borderRadius: 10,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
     elevation: 4,
-    marginBottom: 20,
+    marginTop: 20,
   },
   buttonText: {
-    fontSize: 22,
-    color: "#fcfffc",
+    fontSize: 18,
+    color: theme.colors.white,
     fontWeight: "bold",
+    marginRight: 20,
     textAlign: "center",
   },
 });

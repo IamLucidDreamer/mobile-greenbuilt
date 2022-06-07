@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   text1: {
     textAlign: "left",
     color: theme.colors.primaryBg,
-    fontSize: 45,
+    fontSize: 40,
     marginBottom: 20,
     fontWeight: "700",
   },

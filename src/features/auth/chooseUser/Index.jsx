@@ -108,6 +108,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: theme.colors.white,
     fontWeight: "bold",
-    marginRight: 20,
   },
 });

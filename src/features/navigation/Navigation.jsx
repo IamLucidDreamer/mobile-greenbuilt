@@ -11,6 +11,9 @@ import Antdesign from "react-native-vector-icons/AntDesign";
 
 import theme from "../../Config/theme/Index";
 
+// Import Components
+import Errors from "../components/Errors";
+
 // Import Screens
 import StartScreen from "../startScreen/Index";
 import LoginScreen from "../auth/login/Index";
@@ -24,6 +27,9 @@ import DashboardBusiness from "../businessUser/dashboard/Index";
 import ScannerBusiness from "../businessUser/scanner/Index";
 import { Statistics } from "../businessUser/statistics/Index";
 import Receipt from "../businessUser/receipts/Index";
+import Profile from "../businessUser/profile/Index";
+import Support from "../businessUser/support/Index";
+import History from "../businessUser/history/Index";
 
 export default function Navigation() {
   const Stack = createNativeStackNavigator();
@@ -32,9 +38,28 @@ export default function Navigation() {
   const userObj = useSelector((state) => state.user);
   const isApproved = isEmpty(userObj?.data?.isApproved);
 
+  const ScannerStack = () => {
+    console.log("Hello");
+    return (
+      <View style={{ flex: 1 }} collapsable={false}>
+        <Stack.Navigator
+          initialRouteName="scannerBusiness"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="scannerBusiness" component={ScannerBusiness} />
+          <Stack.Screen name="statistics" component={Statistics} />
+          <Stack.Screen name="receipt" component={Receipt} />
+        </Stack.Navigator>
+      </View>
+    );
+  };
+
   return (
     <NavigationContainer>
       <Status style="inverted" />
+      <Errors />
 
       {isEmpty(userObj) ? (
         //Unauthenticated Stack
@@ -50,26 +75,17 @@ export default function Navigation() {
         </Stack.Navigator>
       ) : !isEmpty(userObj) && userObj.data.role === 1 ? (
         //User Stack
-        <>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
           <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="userScanner" component={ScannerUser} />
-        </>
+        </Stack.Navigator>
       ) : //Business Stack
       !isEmpty(userObj) && isApproved ? (
-        <>
-          {/* <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen
-              name="DashboardBusiness"
-              component={DashboardBusiness}
-            />
-            <Stack.Screen name="scannerBusiness" component={ScannerBusiness} />
-            <Stack.Screen name="statistics" component={Statistics} />
-            <Stack.Screen name="receipt" component={Receipt} />
-          </Stack.Navigator> */}
+        <View style={{ flex: 1 }}>
           <Tab.Navigator
             initialRouteName="Home"
             activeColor={theme.colors.primaryGreen}
@@ -90,23 +106,23 @@ export default function Navigation() {
               options={{
                 tabBarLabel: "Home",
                 tabBarIcon: ({ color }) => (
-                  <Antdesign name="home" color={color} size={26} />
+                  <Antdesign name="home" color={color} size={24} />
                 ),
               }}
             />
             <Tab.Screen
               name="History"
-              component={ScannerBusiness}
+              component={History}
               options={{
                 tabBarLabel: "History",
                 tabBarIcon: ({ color }) => (
-                  <Antdesign name="clockcircleo" color={color} size={26} />
+                  <Antdesign name="clockcircleo" color={color} size={24} />
                 ),
               }}
             />
             <Tab.Screen
               name="Scan"
-              component={ScannerBusiness}
+              component={ScannerStack}
               options={{
                 tabBarLabel: "Scanner",
                 tabBarIcon: ({ color }) => (
@@ -115,27 +131,27 @@ export default function Navigation() {
               }}
             />
             <Tab.Screen
-              name="Community"
-              component={ScannerBusiness}
+              name="Support"
+              component={Support}
               options={{
                 tabBarLabel: "support",
                 tabBarIcon: ({ color }) => (
-                  <Antdesign name="contacts" color={color} size={26} />
+                  <Antdesign name="contacts" color={color} size={24} />
                 ),
               }}
             />
             <Tab.Screen
               name="Profile"
-              component={ScannerBusiness}
+              component={Profile}
               options={{
                 tabBarLabel: "Profile",
                 tabBarIcon: ({ color }) => (
-                  <Antdesign name="user" color={color} size={26} />
+                  <Antdesign name="user" color={color} size={24} />
                 ),
               }}
             />
           </Tab.Navigator>
-        </>
+        </View>
       ) : (
         <Stack.Screen
           name="Verificationscreen"
