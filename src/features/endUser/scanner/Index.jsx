@@ -84,11 +84,11 @@ const ScannerUser = ({ navigation }) => {
       {scanned && (
         <>
           <View style={styles.header}>
-            <Image
+            {/* <Image
               source={require("../../../assets/Splash_Green_Built.png")}
               resizeMode="contain"
               style={{ width: 180, height: 180 }}
-            />
+            /> */}
           </View>
           <View style={styles.footer}>
             <View style={{ marginBottom: 25 }}>

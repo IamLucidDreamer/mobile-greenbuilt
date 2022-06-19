@@ -8,16 +8,13 @@ import {
   TouchableOpacity,
   Platform,
   StatusBar,
-  ImageBackground,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch } from "react-redux";
-
 import * as SecureStore from "expo-secure-store";
 import theme from "../../Config/theme/Index";
 import { setUserDetails } from "../../store/actions/user";
 import isEmpty from "../../utils/isEmpty";
-import { StatusBar as Status } from "expo-status-bar";
 import * as Animatable from "react-native-animatable";
 import { setPoints } from "../../store/actions/appActions";
 import axios from "../../helpers/http-helper";
@@ -43,7 +40,12 @@ export default function StartScreen({ navigation }) {
             })
             .then((res) => {
               console.log(res.data.user.points);
-              dispatch(setPoints({ actualPoints: res.data.user.points , totalPoints : res.data.user.totalPoints }));
+              dispatch(
+                setPoints({
+                  actualPoints: res.data.user.points,
+                  totalPoints: res.data.user.totalPoints,
+                })
+              );
             })
             .catch((err) => console.log(err, "Hello From Catch"));
         }
@@ -68,16 +70,8 @@ export default function StartScreen({ navigation }) {
           style={styles.footer}
           animation="fadeInUpBig"
           duration={1000}
-          tint="dark"
         >
-          <Text
-            animation="zoomIn"
-            duration={1000}
-            delay={1200}
-            style={styles.text1}
-          >
-            Let's Save the Planet Together
-          </Text>
+          <Text style={styles.text1}>Let's Save the Planet Together</Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate("Login")}

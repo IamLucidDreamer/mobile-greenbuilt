@@ -6,8 +6,8 @@
     "orientation": "portrait",
     "icon": "./src/assets/iconAndroid.png",
     "splash": {
-      "image": "./src/assets/logoGreenbuilt.png",
-      "resizeMode": "contain",
+      "image": "./src/assets/splash_screen_greenbuilt.png",
+      "resizeMode": "cover",
       "backgroundColor": "#140035"
     },
     "updates": {
