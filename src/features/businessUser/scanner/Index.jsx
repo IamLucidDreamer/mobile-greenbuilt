@@ -19,12 +19,14 @@ import { errorMessage, setPoints } from "../../../store/actions/appActions";
 import * as Animatable from "react-native-animatable";
 import { StatusBar as Status } from "expo-status-bar";
 import theme from "../../../Config/theme/Index";
+import { useSelector } from "react-redux";
 
 const ScannerBusiness = ({ navigation }) => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(true);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const totalPointsBusiness = useSelector(state => state.appReducers.points)
 
   useEffect(() => {
     (async () => {
@@ -55,7 +57,8 @@ const ScannerBusiness = ({ navigation }) => {
           console.log(res.data);
           dispatch(errorMessage({ show: true, message: res.data.message }));
           navigation.navigate("receipt", { receiptData: res.data });
-          dispatch(setPoints(res.data.availableUserPoints));
+          console.log(totalPointsBusiness);
+          dispatch(setPoints({ actualPoints : res.data.availableUserPoints , totalPoints : totalPointsBusiness?.totalPoints + res.data.pointsConsumed}));
         })
         .catch((err) => {
           console.log(err?.response?.data?.message);

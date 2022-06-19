@@ -38,7 +38,7 @@ export const login =
         const user = res.data;
         console.log({ user });
         dispatch(setUserDetails(res.data));
-        dispatch(setPoints(res.data.data.points));
+        dispatch(setPoints({actualPoints : res.data.data.points , totalPoints : res.data.data.totalPoints}));
         dispatch(errorMessage({ show: true, message: res.data.message }));
         SecureStore.setItemAsync("jwt", res.data.token);
         SecureStore.setItemAsync("user", JSON.stringify(res.data.data));

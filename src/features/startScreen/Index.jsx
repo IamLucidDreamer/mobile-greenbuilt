@@ -11,11 +11,10 @@ import {
   ImageBackground,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import * as SecureStore from "expo-secure-store";
 import theme from "../../Config/theme/Index";
-import Button from "../components/Button";
 import { setUserDetails } from "../../store/actions/user";
 import isEmpty from "../../utils/isEmpty";
 import { StatusBar as Status } from "expo-status-bar";
@@ -44,7 +43,7 @@ export default function StartScreen({ navigation }) {
             })
             .then((res) => {
               console.log(res.data.user.points);
-              dispatch(setPoints(res.data.user.points));
+              dispatch(setPoints({ actualPoints: res.data.user.points , totalPoints : res.data.user.totalPoints }));
             })
             .catch((err) => console.log(err, "Hello From Catch"));
         }
@@ -54,7 +53,6 @@ export default function StartScreen({ navigation }) {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Status style="inverted" />
       <LinearGradient
         colors={[theme.colors.primaryBg, theme.colors.primaryBg2]}
         style={styles.container}

@@ -58,27 +58,31 @@ export default function Navigation() {
 
   return (
     <NavigationContainer>
-      <Status style="inverted" />
       <Errors />
 
       {isEmpty(userObj) ? (
         //Unauthenticated Stack
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="Start" component={StartScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="userSelect" component={ChooseUser} />
-          <Stack.Screen name="userSignUp" component={SignUpEndUser} />
-        </Stack.Navigator>
+        <>
+          <Status style="light" />
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+              animation:"fade"
+            }}
+          >
+            <Stack.Screen name="Start" component={StartScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="userSelect" component={ChooseUser} />
+            <Stack.Screen name="userSignUp" component={SignUpEndUser} />
+          </Stack.Navigator>
+        </>
       ) : !isEmpty(userObj) && userObj.data.role === 1 ? (
         //User Stack
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
           }}
+          
         >
           <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="userScanner" component={ScannerUser} />

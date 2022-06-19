@@ -3,7 +3,7 @@ import { SET_LOADER, SET_ERROR, UPDATE_POINTS } from "../constants/index";
 const initialState = {
   loader: false,
   error: {},
-  points: 0,
+  points: {},
 };
 
 const appActions = (state = initialState, action) => {

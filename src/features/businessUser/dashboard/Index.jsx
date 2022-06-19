@@ -33,7 +33,7 @@ const DashboardBusiness = ({ navigation }) => {
   const points = useSelector((state) => state.appReducers.points);
   const [scans, setScans] = useState([]);
 
-  console.log(user);
+  console.log(points , "hello")
 
   const date = new Date();
   const fullDate = `${date.getDate()}  , ${date.getFullYear()}`;
@@ -125,7 +125,7 @@ const DashboardBusiness = ({ navigation }) => {
                 textAlign: "center",
               }}
             >
-              {points}
+              {points.actualPoints}
             </Animatable.Text>
           </Animatable.View>
         </View>
@@ -186,7 +186,7 @@ const DashboardBusiness = ({ navigation }) => {
               <Text
                 style={{ color: "#e1e1e1", fontSize: 13, textAlign: "left" }}
               >
-                Total CO2 Saved
+                Total CO2 Offset
               </Text>
               <Text
                 style={{
@@ -196,7 +196,7 @@ const DashboardBusiness = ({ navigation }) => {
                   textAlign: "left",
                 }}
               >
-                {Math.round(points * 0.935)}{" "}
+                {Math.round(points.totalPoints * 0.935)}{" "}
                 <Text
                   style={{
                     fontSize: 12,
@@ -248,7 +248,7 @@ const DashboardBusiness = ({ navigation }) => {
                   textAlign: "left",
                 }}
               >
-                {Math.round(points * 2.59)}{" "}
+                {Math.round(points.totalPoints * 2.59)}{" "}
                 <Text
                   style={{
                     fontSize: 12,
@@ -304,14 +304,14 @@ const DashboardBusiness = ({ navigation }) => {
                   textAlign: "left",
                 }}
               >
-                {Math.round(points * 2.59)}{" "}
+                {points.totalPoints}{" "}
                 <Text
                   style={{
                     fontSize: 12,
                     color: "#fff",
                   }}
                 >
-                  Units
+                  KW
                 </Text>
               </Text>
             </View>

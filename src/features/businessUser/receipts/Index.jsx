@@ -90,6 +90,18 @@ const Receipt = ({ route, navigation }) => {
             >
               GREEN CARD
             </Text>
+            <Text
+              style={{
+                marginBottom:20,
+                fontSize: 22,
+                color: theme.colors.purple,
+                padding: 2,
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
+            >
+              {receiptData?.data?.title}
+            </Text>
             <View
               style={{
                 flexDirection: "row",
@@ -117,7 +129,7 @@ const Receipt = ({ route, navigation }) => {
                 CO2 offset
               </Text>
               <Text style={{ fontSize: 17, color: theme.colors.purple }}>
-                {Math.round(receiptData?.data?.points * 0.935)} Kg
+                {Math.round(receiptData?.pointsConsumed * 0.935)} Kg
               </Text>
             </View>
             <View
@@ -132,7 +144,7 @@ const Receipt = ({ route, navigation }) => {
                 H2O Saved
               </Text>
               <Text style={{ fontSize: 17, color: theme.colors.purple }}>
-                {Math.round(receiptData?.data?.points * 2.59)} Ltr
+                {Math.round(receiptData?.pointsConsumed * 2.59)} Ltr
               </Text>
             </View>
           </View>
