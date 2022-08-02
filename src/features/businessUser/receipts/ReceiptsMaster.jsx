@@ -20,11 +20,12 @@ import { useSelector } from "react-redux";
 import { captureRef } from "react-native-view-shot";
 import * as Share from "expo-sharing";
 
-const Receipt = ({ route, navigation }) => {
+const ReceiptsMaster = ({ route, navigation }) => {
   const viewRef = useRef();
+  const { totalPoints } = route.params;
+  console.log(totalPoints , "Hello");
 
-  const { receiptData } = route.params;
-  console.log(receiptData, "Hello");
+  const totalPoint = parseInt(totalPoints);
   const user = useSelector((state) => state.user);
   const firstName = (str) => str.split(/\|/).map((s) => s.split(/\s+/)[0]);
 
@@ -32,7 +33,7 @@ const Receipt = ({ route, navigation }) => {
   const month = new Date().getMonth();
   const year = new Date().getFullYear();
 
-    const onShare = async () => {
+  const onShare = async () => {
     try {
       const uri = await captureRef(viewRef, { format: "png", quality: 0.7 });
       console.log(uri);
@@ -124,7 +125,7 @@ const Receipt = ({ route, navigation }) => {
                 fontWeight: "bold",
               }}
             >
-              {receiptData?.data?.title}
+              Total Impact Made
             </Text>
             <View
               style={{
@@ -135,10 +136,10 @@ const Receipt = ({ route, navigation }) => {
               }}
             >
               <Text style={{ fontSize: 17, color: theme.colors.purple }}>
-                Points Earned
+                Total Points Earned
               </Text>
               <Text style={{ fontSize: 17, color: theme.colors.purple }}>
-                {receiptData?.pointsConsumed} unit
+                {totalPoint} unit
               </Text>
             </View>
             <View
@@ -150,10 +151,10 @@ const Receipt = ({ route, navigation }) => {
               }}
             >
               <Text style={{ fontSize: 17, color: theme.colors.purple }}>
-                CO2 offset
+                Total CO2 offset
               </Text>
               <Text style={{ fontSize: 17, color: theme.colors.purple }}>
-                {Math.round(receiptData?.pointsConsumed * 0.935)} Kg
+                {Math.round(totalPoint * 0.935)} Kg
               </Text>
             </View>
             <View
@@ -165,10 +166,10 @@ const Receipt = ({ route, navigation }) => {
               }}
             >
               <Text style={{ fontSize: 17, color: theme.colors.purple }}>
-                H2O Saved
+                Total H2O Saved
               </Text>
               <Text style={{ fontSize: 17, color: theme.colors.purple }}>
-                {Math.round(receiptData?.pointsConsumed * 2.59)} Ltr
+                {Math.round(totalPoint * 2.59)} Ltr
               </Text>
             </View>
           </View>
@@ -201,7 +202,7 @@ const Receipt = ({ route, navigation }) => {
   );
 };
 
-export default Receipt;
+export default ReceiptsMaster;
 
 const styles = StyleSheet.create({
   container: {

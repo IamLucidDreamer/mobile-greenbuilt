@@ -8,24 +8,23 @@
     "splash": {
       "image": "./src/assets/splash_screen_greenbuilt.png",
       "resizeMode": "cover",
-      "backgroundColor": "#140035"
+      "backgroundColor": "#0a2c3c"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.greenbuilt.app"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/Splash_Green_Built.png",
-        "backgroundColor": "#140035"
+        "foregroundImage": "./src/assets/adaptive_favicon.png",
+        "backgroundColor": "#0a2c3c"
       },
-      "package": "com.greenbuilt.app"
+      "package": "com.greenbuilt.app",
+      "permissions": ["CAMERA", "WRITE_EXTERNAL_STORAGE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

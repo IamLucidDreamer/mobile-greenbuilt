@@ -8,14 +8,9 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  TextInput,
-  ImageBackground,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import theme from "../../../Config/theme/Index";
-import Button from "../../components/Button";
-import { StatusBar as Status } from "expo-status-bar";
-import GradientText from "../../components/GradientText";
 import * as Animatable from "react-native-animatable";
 
 const ChooseUser = ({ navigation }) => {
@@ -29,12 +24,12 @@ const ChooseUser = ({ navigation }) => {
           <Image
             source={require("../../../assets/logoGreenbuilt.png")}
             resizeMode="contain"
-            style={{ width: "95%", height: 350, marginBottom: 50 }}
+            style={{ width: "100%", height: 350, marginBottom: 50 }}
           />
         </View>
         <Animatable.View
           animation="fadeInUpBig"
-          duration={2000}
+          duration={1000}
           style={styles.footer}
         >
           <Text
@@ -47,7 +42,7 @@ const ChooseUser = ({ navigation }) => {
           </Text>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("SignBusiness")}
+            onPress={() => navigation.navigate("businessSignUp")}
           >
             <Text style={styles.buttonText}>Enterprise</Text>
           </TouchableOpacity>

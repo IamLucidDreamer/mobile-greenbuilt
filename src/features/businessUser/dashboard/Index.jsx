@@ -33,7 +33,7 @@ const DashboardBusiness = ({ navigation }) => {
   const points = useSelector((state) => state.appReducers.points);
   const [scans, setScans] = useState([]);
 
-  console.log(points , "hello")
+  console.log(points, "hello");
 
   const date = new Date();
   const fullDate = `${date.getDate()}  , ${date.getFullYear()}`;
@@ -92,42 +92,51 @@ const DashboardBusiness = ({ navigation }) => {
             elevation: 12,
           }}
         >
-          <Animatable.View
-            style={{
-              width: 280,
-              height: 280,
-              alignSelf: "center",
-              justifyContent: "center",
-              borderRadius: 140,
-              borderWidth: 25,
-              borderColor: "#41ce8c",
-            }}
-            animation="flash"
-            duration={1500}
-            delay={800}
+          <TouchableOpacity
+            onPress={() =>{
+              navigation.navigate("receiptsMaster", {
+                totalPoints: points.totalPoints,
+              })
+              console.log(points.totalPoints)}
+            }
           >
-            <Animatable.Text
-              animation={"fadeIn"}
-              duration={500}
-              delay={2200}
-              style={{ color: "#8597a0", fontSize: 18, textAlign: "center" }}
-            >
-              Total Points
-            </Animatable.Text>
-            <Animatable.Text
-              duration={800}
-              delay={2500}
-              animation={"fadeIn"}
+            <Animatable.View
               style={{
-                fontSize: 40,
-                color: "#fff",
-                fontWeight: "bold",
-                textAlign: "center",
+                width: 280,
+                height: 280,
+                alignSelf: "center",
+                justifyContent: "center",
+                borderRadius: 140,
+                borderWidth: 25,
+                borderColor: "#41ce8c",
               }}
+              animation="flash"
+              duration={1500}
+              delay={800}
             >
-              {points.actualPoints}
-            </Animatable.Text>
-          </Animatable.View>
+              <Animatable.Text
+                animation={"fadeIn"}
+                duration={500}
+                delay={2200}
+                style={{ color: "#8597a0", fontSize: 18, textAlign: "center" }}
+              >
+                Total Points
+              </Animatable.Text>
+              <Animatable.Text
+                duration={800}
+                delay={2500}
+                animation={"fadeIn"}
+                style={{
+                  fontSize: 40,
+                  color: "#fff",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                {points.actualPoints}
+              </Animatable.Text>
+            </Animatable.View>
+          </TouchableOpacity>
         </View>
 
         <View>

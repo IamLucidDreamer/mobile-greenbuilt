@@ -5,30 +5,27 @@ import {
   Platform,
   View,
   StyleSheet,
-  Image,
   Text,
   TouchableOpacity,
   ScrollView,
   TextInput,
-  ImageBackground,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
 import { LinearGradient } from "expo-linear-gradient";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../../store/actions/user";
-import * as SecureStore from "expo-secure-store";
-import { authenticated, isBusinessUser } from "../../../helpers/auth-helper";
 import theme from "../../../Config/theme/Index";
 import * as Animatable from "react-native-animatable";
-import { BlurView } from "expo-blur";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [eye, setEye] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   console.log({ user });
   const handleSignin = ({ email, password }) => {
@@ -78,6 +75,8 @@ const LoginScreen = ({ navigation }) => {
               // same shape as initial values
               console.log(values);
               handleSignin({ email, password });
+              setLoading(true);
+              setTimeout(() => setLoading(false), 6000);
             }}
           >
             {(formProps) => (
@@ -135,15 +134,24 @@ const LoginScreen = ({ navigation }) => {
                   >
                     <Text style={styles.forgottext}>Forgot Password</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={formProps.handleSubmit}
-                    type="submit"
-                    style={styles.button}
-                  >
-                    <Text style={styles.buttonText}>Log In</Text>
-                  </TouchableOpacity>
+                  {loading ? (
+                    <ActivityIndicator
+                      size={"large"}
+                      animating={true}
+                      color={theme.colors.primaryGreen}
+                    />
+                  ) : (
+                    <TouchableOpacity
+                      onPress={formProps.handleSubmit}
+                      type="submit"
+                      style={styles.button}
+                    >
+                      <Text style={styles.buttonText}>Log In</Text>
+                    </TouchableOpacity>
+                  )}
                   <View style={styles.signup}>
                     <Text style={styles.signtxt}>Don't have an Account ? </Text>
+
                     <TouchableOpacity
                       onPress={() => navigation.navigate("userSelect")}
                     >

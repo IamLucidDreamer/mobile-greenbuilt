@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -18,6 +19,8 @@ import * as SecureStore from "expo-secure-store";
 
 const History = () => {
   const user = useSelector((state) => state.user);
+  const [limit, setLimit] = useState(10);
+  const [offset, setOffset] = useState(0);
 
   const [value, setValue] = useReducer(
     (state, diff) => ({ ...state, ...diff }),
@@ -37,11 +40,14 @@ const History = () => {
     SecureStore.getItemAsync("jwt").then((token) => {
       console.log("Hello getHistory");
       axios
-        .get(`/qr/history/generate/${user?.data?.id}?redeemed=0&limit=10`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        .get(
+          `/qr/history/consume/${user?.data?.id}?limit=${limit}&offset=${offset}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((res) => {
           console.log(res?.data?.data);
           setValue({ data: res?.data?.data });
@@ -56,7 +62,7 @@ const History = () => {
     });
   };
 
-  const HistoryCard = () => {
+  const HistoryCard = ({ item }) => {
     return (
       <View style={{ alignItems: "center" }}>
         <View
@@ -81,13 +87,13 @@ const History = () => {
             source={require("../../../assets/logoGreenbuilt1.png")}
           />
           <View style={{ paddingHorizontal: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-              Name of the Product Here
+            <Text style={{ fontSize: 25, fontWeight: "bold" }}>
+              {console.log(item)}
+              {item?.product?.title}
             </Text>
             <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-              Points : 100/UOM
+              Points : {item?.product?.points}
             </Text>
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>UOM :10</Text>
           </View>
         </View>
       </View>
@@ -97,9 +103,22 @@ const History = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Status style="light" />
-      <LinearGradient colors={["#0a2c3c", "#00404c"]} style={{ flex: 1 }}>
+      <LinearGradient
+        colors={["#0a2c3c", "#00404c"]}
+        style={{ flex: 1, marginBottom: 60 }}
+      >
         <Text style={styles.text1}>History</Text>
-        <FlatList data={data1} renderItem={HistoryCard} />
+        <FlatList
+          data={data}
+          renderItem={HistoryCard}
+          keyExtractor={(item) => item?.product?.id}
+          onEndReached={() => {
+            console.log("end")
+            setOffset(offset + limit);
+            getHistory();
+          }}
+          onEndReachedThreshold={0.5}
+        />
       </LinearGradient>
     </SafeAreaView>
   );
