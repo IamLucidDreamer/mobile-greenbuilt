@@ -1,8 +1,9 @@
 {
   "expo": {
+    
     "name": "GreenBuilt",
     "slug": "Green_Built",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./src/assets/iconAndroid.png",
     "splash": {
@@ -13,21 +14,35 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.greenbuilt.app"
     },
     "android": {
+      "buildType": "apk",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive_favicon.png",
         "backgroundColor": "#0a2c3c"
       },
       "package": "com.greenbuilt.app",
-      "permissions": ["CAMERA", "WRITE_EXTERNAL_STORAGE"]
+      "permissions": [
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2d1ebacc-2b60-4cb1-8f60-1082abca3d81"
+      }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }
